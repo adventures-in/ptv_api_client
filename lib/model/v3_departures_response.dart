@@ -1,91 +1,64 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DeparturesResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_departure.dart';
+import 'package:ptv_api_client/model/v3_direction.dart';
+import 'package:ptv_api_client/model/v3_disruption.dart';
+import 'package:ptv_api_client/model/v3_result_stop.dart';
+import 'package:ptv_api_client/model/v3_route.dart';
+import 'package:ptv_api_client/model/v3_run.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_departures_response.g.dart';
+
+abstract class V3DeparturesResponse
+    implements Built<V3DeparturesResponse, V3DeparturesResponseBuilder> {
   /* Timetabled and real-time service departures */
-  List<V3Departure> departures = [];
+
+  @BuiltValueField(wireName: 'departures')
+  BuiltList<V3Departure> get departures;
   /* A train station, tram stop, bus stop, regional coach stop or Night Bus stop */
-  Map<String, V3ResultStop> stops = {};
+
+  @BuiltValueField(wireName: 'stops')
+  BuiltMap<String, V3ResultStop> get stops;
   /* Train lines, tram routes, bus routes, regional coach routes, Night Bus routes */
-  Map<String, V3Route> routes = {};
+
+  @BuiltValueField(wireName: 'routes')
+  BuiltMap<String, V3Route> get routes;
   /* Individual trips/services of a route */
-  Map<String, V3Run> runs = {};
+
+  @BuiltValueField(wireName: 'runs')
+  BuiltMap<String, V3Run> get runs;
   /* Directions of travel of route */
-  Map<String, V3Direction> directions = {};
+
+  @BuiltValueField(wireName: 'directions')
+  BuiltMap<String, V3Direction> get directions;
   /* Disruption information applicable to relevant routes or stops */
-  Map<String, V3Disruption> disruptions = {};
 
-  V3Status status;
-  V3DeparturesResponse();
+  @BuiltValueField(wireName: 'disruptions')
+  BuiltMap<String, V3Disruption> get disruptions;
 
-  @override
-  String toString() {
-    return 'V3DeparturesResponse[departures=$departures, stops=$stops, routes=$routes, runs=$runs, directions=$directions, disruptions=$disruptions, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3DeparturesResponse._();
+
+  factory V3DeparturesResponse([updates(V3DeparturesResponseBuilder b)]) =
+      _$V3DeparturesResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DeparturesResponse.serializer, this);
   }
 
-  V3DeparturesResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['departures'] == null) {
-      departures = null;
-    } else {
-      departures = V3Departure.listFromJson(json['departures']);
-    }
-    if (json['stops'] == null) {
-      stops = null;
-    } else {
-      stops = V3ResultStop.mapFromJson(json['stops']);
-    }
-    if (json['routes'] == null) {
-      routes = null;
-    } else {
-      routes = V3Route.mapFromJson(json['routes']);
-    }
-    if (json['runs'] == null) {
-      runs = null;
-    } else {
-      runs = V3Run.mapFromJson(json['runs']);
-    }
-    if (json['directions'] == null) {
-      directions = null;
-    } else {
-      directions = V3Direction.mapFromJson(json['directions']);
-    }
-    if (json['disruptions'] == null) {
-      disruptions = null;
-    } else {
-      disruptions = V3Disruption.mapFromJson(json['disruptions']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3DeparturesResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DeparturesResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (departures != null) json['departures'] = departures;
-    if (stops != null) json['stops'] = stops;
-    if (routes != null) json['routes'] = routes;
-    if (runs != null) json['runs'] = runs;
-    if (directions != null) json['directions'] = directions;
-    if (disruptions != null) json['disruptions'] = disruptions;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3DeparturesResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DeparturesResponse>()
-        : json.map((value) => V3DeparturesResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DeparturesResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3DeparturesResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DeparturesResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DeparturesResponse> get serializer =>
+      _$v3DeparturesResponseSerializer;
 }

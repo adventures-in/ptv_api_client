@@ -1,4 +1,4 @@
-part of ptv_api_client.api;
+import 'package:ptv_api_client/api_client.dart';
 
 abstract class Authentication {
   /// Apply authentication settings to header and query params.

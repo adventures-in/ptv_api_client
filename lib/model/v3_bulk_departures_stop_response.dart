@@ -1,77 +1,54 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3BulkDeparturesStopResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_bulk_departures_stop_response.g.dart';
+
+abstract class V3BulkDeparturesStopResponse
+    implements
+        Built<V3BulkDeparturesStopResponse,
+            V3BulkDeparturesStopResponseBuilder> {
   /* Name of stop */
-  String stopName;
+
+  @BuiltValueField(wireName: 'stop_name')
+  String get stopName;
   /* Stop identifier */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Geographic coordinate of latitude at stop */
-  double stopLatitude;
+
+  @BuiltValueField(wireName: 'stop_latitude')
+  double get stopLatitude;
   /* Geographic coordinate of longitude at stop */
-  double stopLongitude;
+
+  @BuiltValueField(wireName: 'stop_longitude')
+  double get stopLongitude;
   /* suburb of stop */
-  String stopSuburb;
-  V3BulkDeparturesStopResponse();
 
-  @override
-  String toString() {
-    return 'V3BulkDeparturesStopResponse[stopName=$stopName, stopId=$stopId, stopLatitude=$stopLatitude, stopLongitude=$stopLongitude, stopSuburb=$stopSuburb, ]';
+  @BuiltValueField(wireName: 'stop_suburb')
+  String get stopSuburb;
+
+  V3BulkDeparturesStopResponse._();
+
+  factory V3BulkDeparturesStopResponse(
+          [updates(V3BulkDeparturesStopResponseBuilder b)]) =
+      _$V3BulkDeparturesStopResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3BulkDeparturesStopResponse.serializer, this);
   }
 
-  V3BulkDeparturesStopResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stop_name'] == null) {
-      stopName = null;
-    } else {
-      stopName = json['stop_name'];
-    }
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['stop_latitude'] == null) {
-      stopLatitude = null;
-    } else {
-      stopLatitude = json['stop_latitude'];
-    }
-    if (json['stop_longitude'] == null) {
-      stopLongitude = null;
-    } else {
-      stopLongitude = json['stop_longitude'];
-    }
-    if (json['stop_suburb'] == null) {
-      stopSuburb = null;
-    } else {
-      stopSuburb = json['stop_suburb'];
-    }
+  static V3BulkDeparturesStopResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3BulkDeparturesStopResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stopName != null) json['stop_name'] = stopName;
-    if (stopId != null) json['stop_id'] = stopId;
-    if (stopLatitude != null) json['stop_latitude'] = stopLatitude;
-    if (stopLongitude != null) json['stop_longitude'] = stopLongitude;
-    if (stopSuburb != null) json['stop_suburb'] = stopSuburb;
-    return json;
-  }
-
-  static List<V3BulkDeparturesStopResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3BulkDeparturesStopResponse>()
-        : json
-            .map((value) => V3BulkDeparturesStopResponse.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3BulkDeparturesStopResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3BulkDeparturesStopResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3BulkDeparturesStopResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3BulkDeparturesStopResponse> get serializer =>
+      _$v3BulkDeparturesStopResponseSerializer;
 }

@@ -1,74 +1,47 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Route {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_route.g.dart';
+
+abstract class V3Route implements Built<V3Route, V3RouteBuilder> {
   /* Transport mode identifier */
-  int routeType;
+
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
   /* Route identifier */
-  int routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  int get routeId;
   /* Name of route */
-  String routeName;
+
+  @BuiltValueField(wireName: 'route_name')
+  String get routeName;
   /* Route number presented to public (nb. not route_id) */
-  String routeNumber;
+
+  @BuiltValueField(wireName: 'route_number')
+  String get routeNumber;
   /* GTFS Identifer of the route */
-  String routeGtfsId;
-  V3Route();
 
-  @override
-  String toString() {
-    return 'V3Route[routeType=$routeType, routeId=$routeId, routeName=$routeName, routeNumber=$routeNumber, routeGtfsId=$routeGtfsId, ]';
+  @BuiltValueField(wireName: 'route_gtfs_id')
+  String get routeGtfsId;
+
+  V3Route._();
+
+  factory V3Route([updates(V3RouteBuilder b)]) = _$V3Route;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Route.serializer, this);
   }
 
-  V3Route.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['route_name'] == null) {
-      routeName = null;
-    } else {
-      routeName = json['route_name'];
-    }
-    if (json['route_number'] == null) {
-      routeNumber = null;
-    } else {
-      routeNumber = json['route_number'];
-    }
-    if (json['route_gtfs_id'] == null) {
-      routeGtfsId = null;
-    } else {
-      routeGtfsId = json['route_gtfs_id'];
-    }
+  static V3Route fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Route.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeType != null) json['route_type'] = routeType;
-    if (routeId != null) json['route_id'] = routeId;
-    if (routeName != null) json['route_name'] = routeName;
-    if (routeNumber != null) json['route_number'] = routeNumber;
-    if (routeGtfsId != null) json['route_gtfs_id'] = routeGtfsId;
-    return json;
-  }
-
-  static List<V3Route> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Route>()
-        : json.map((value) => V3Route.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Route> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Route>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3Route.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Route> get serializer => _$v3RouteSerializer;
 }

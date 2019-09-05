@@ -1,67 +1,46 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DisruptionDirection {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_disruption_direction.g.dart';
+
+abstract class V3DisruptionDirection
+    implements Built<V3DisruptionDirection, V3DisruptionDirectionBuilder> {
   /* Route and direction of travel combination identifier */
-  int routeDirectionId;
+
+  @BuiltValueField(wireName: 'route_direction_id')
+  int get routeDirectionId;
   /* Direction of travel identifier */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Name of direction of travel */
-  String directionName;
+
+  @BuiltValueField(wireName: 'direction_name')
+  String get directionName;
   /* Time of service to which disruption applies, in 24 hour clock format (HH:MM:SS) AEDT/AEST; returns null if disruption applies to multiple (or no) services */
-  String serviceTime;
-  V3DisruptionDirection();
 
-  @override
-  String toString() {
-    return 'V3DisruptionDirection[routeDirectionId=$routeDirectionId, directionId=$directionId, directionName=$directionName, serviceTime=$serviceTime, ]';
+  @BuiltValueField(wireName: 'service_time')
+  String get serviceTime;
+
+  V3DisruptionDirection._();
+
+  factory V3DisruptionDirection([updates(V3DisruptionDirectionBuilder b)]) =
+      _$V3DisruptionDirection;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DisruptionDirection.serializer, this);
   }
 
-  V3DisruptionDirection.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_direction_id'] == null) {
-      routeDirectionId = null;
-    } else {
-      routeDirectionId = json['route_direction_id'];
-    }
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['direction_name'] == null) {
-      directionName = null;
-    } else {
-      directionName = json['direction_name'];
-    }
-    if (json['service_time'] == null) {
-      serviceTime = null;
-    } else {
-      serviceTime = json['service_time'];
-    }
+  static V3DisruptionDirection fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DisruptionDirection.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeDirectionId != null) json['route_direction_id'] = routeDirectionId;
-    if (directionId != null) json['direction_id'] = directionId;
-    if (directionName != null) json['direction_name'] = directionName;
-    if (serviceTime != null) json['service_time'] = serviceTime;
-    return json;
-  }
-
-  static List<V3DisruptionDirection> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DisruptionDirection>()
-        : json.map((value) => V3DisruptionDirection.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DisruptionDirection> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3DisruptionDirection>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DisruptionDirection.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DisruptionDirection> get serializer =>
+      _$v3DisruptionDirectionSerializer;
 }

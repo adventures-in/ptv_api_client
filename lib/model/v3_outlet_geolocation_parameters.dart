@@ -1,53 +1,42 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3OutletGeolocationParameters {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_outlet_geolocation_parameters.g.dart';
+
+abstract class V3OutletGeolocationParameters
+    implements
+        Built<V3OutletGeolocationParameters,
+            V3OutletGeolocationParametersBuilder> {
   /* Filter by maximum distance (in metres) from location specified via latitude and longitude parameters (default = 300) */
-  double maxDistance;
+
+  @BuiltValueField(wireName: 'max_distance')
+  double get maxDistance;
   /* Maximum number of results returned (default = 30) */
-  int maxResults;
-  V3OutletGeolocationParameters();
 
-  @override
-  String toString() {
-    return 'V3OutletGeolocationParameters[maxDistance=$maxDistance, maxResults=$maxResults, ]';
+  @BuiltValueField(wireName: 'max_results')
+  int get maxResults;
+
+  V3OutletGeolocationParameters._();
+
+  factory V3OutletGeolocationParameters(
+          [updates(V3OutletGeolocationParametersBuilder b)]) =
+      _$V3OutletGeolocationParameters;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3OutletGeolocationParameters.serializer, this);
   }
 
-  V3OutletGeolocationParameters.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['max_distance'] == null) {
-      maxDistance = null;
-    } else {
-      maxDistance = json['max_distance'].toDouble();
-    }
-    if (json['max_results'] == null) {
-      maxResults = null;
-    } else {
-      maxResults = json['max_results'];
-    }
+  static V3OutletGeolocationParameters fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3OutletGeolocationParameters.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (maxDistance != null) json['max_distance'] = maxDistance;
-    if (maxResults != null) json['max_results'] = maxResults;
-    return json;
-  }
-
-  static List<V3OutletGeolocationParameters> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3OutletGeolocationParameters>()
-        : json
-            .map((value) => V3OutletGeolocationParameters.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3OutletGeolocationParameters> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3OutletGeolocationParameters>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3OutletGeolocationParameters.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3OutletGeolocationParameters> get serializer =>
+      _$v3OutletGeolocationParametersSerializer;
 }

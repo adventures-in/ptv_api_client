@@ -1,4 +1,5 @@
-part of ptv_api_client.api;
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/auth/authentication.dart';
 
 class OAuth implements Authentication {
   String _accessToken;

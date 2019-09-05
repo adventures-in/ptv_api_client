@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class DeparturesApi {
   final ApiClient apiClient;
@@ -39,36 +44,36 @@ class DeparturesApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (platformNumbers != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "platform_numbers", platformNumbers));
     }
     if (directionId != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "direction_id", directionId));
     }
     if (lookBackwards != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "look_backwards", lookBackwards));
     }
     if (gtfs != null) {
       queryParams
-          .addAll(_convertParametersForCollectionFormat("", "gtfs", gtfs));
+          .addAll(convertParametersForCollectionFormat("", "gtfs", gtfs));
     }
     if (dateUtc != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "date_utc", dateUtc));
+          convertParametersForCollectionFormat("", "date_utc", dateUtc));
     }
     if (maxResults != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "max_results", maxResults));
+          convertParametersForCollectionFormat("", "max_results", maxResults));
     }
     if (includeCancelled != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "include_cancelled", includeCancelled));
     }
     if (expand != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("multi", "expand", expand));
+          convertParametersForCollectionFormat("multi", "expand", expand));
     }
 
     List<String> contentTypes = [];
@@ -87,11 +92,9 @@ class DeparturesApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DeparturesResponse')
-          as V3DeparturesResponse;
+      return V3DeparturesResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -135,32 +138,32 @@ class DeparturesApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (directionId != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "direction_id", directionId));
     }
     if (lookBackwards != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "look_backwards", lookBackwards));
     }
     if (gtfs != null) {
       queryParams
-          .addAll(_convertParametersForCollectionFormat("", "gtfs", gtfs));
+          .addAll(convertParametersForCollectionFormat("", "gtfs", gtfs));
     }
     if (dateUtc != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "date_utc", dateUtc));
+          convertParametersForCollectionFormat("", "date_utc", dateUtc));
     }
     if (maxResults != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "max_results", maxResults));
+          convertParametersForCollectionFormat("", "max_results", maxResults));
     }
     if (includeCancelled != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "include_cancelled", includeCancelled));
     }
     if (expand != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("multi", "expand", expand));
+          convertParametersForCollectionFormat("multi", "expand", expand));
     }
 
     List<String> contentTypes = [];
@@ -179,11 +182,9 @@ class DeparturesApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DeparturesResponse')
-          as V3DeparturesResponse;
+      return V3DeparturesResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

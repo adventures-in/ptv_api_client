@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class RoutesApi {
   final ApiClient apiClient;
@@ -22,12 +27,12 @@ class RoutesApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (routeTypes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "route_types", routeTypes));
     }
     if (routeName != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "route_name", routeName));
+          convertParametersForCollectionFormat("", "route_name", routeName));
     }
 
     List<String> contentTypes = [];
@@ -46,10 +51,9 @@ class RoutesApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-          _decodeBodyBytes(response), 'V3RouteResponse') as V3RouteResponse;
+      return V3RouteResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -92,10 +96,9 @@ class RoutesApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-          _decodeBodyBytes(response), 'V3RouteResponse') as V3RouteResponse;
+      return V3RouteResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

@@ -1,49 +1,35 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3RunResponse {
-  V3Run run;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_run.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
 
-  V3Status status;
-  V3RunResponse();
+import 'package:ptv_api_client/serializers.dart';
 
-  @override
-  String toString() {
-    return 'V3RunResponse[run=$run, status=$status, ]';
+part 'v3_run_response.g.dart';
+
+abstract class V3RunResponse
+    implements Built<V3RunResponse, V3RunResponseBuilder> {
+  @BuiltValueField(wireName: 'run')
+  V3Run get run;
+
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3RunResponse._();
+
+  factory V3RunResponse([updates(V3RunResponseBuilder b)]) = _$V3RunResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3RunResponse.serializer, this);
   }
 
-  V3RunResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['run'] == null) {
-      run = null;
-    } else {
-      run = V3Run.fromJson(json['run']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3RunResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3RunResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (run != null) json['run'] = run;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3RunResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3RunResponse>()
-        : json.map((value) => V3RunResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3RunResponse> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3RunResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3RunResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3RunResponse> get serializer => _$v3RunResponseSerializer;
 }

@@ -1,125 +1,71 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Run {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_vehicle_descriptor.dart';
+import 'package:ptv_api_client/model/v3_vehicle_position.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_run.g.dart';
+
+abstract class V3Run implements Built<V3Run, V3RunBuilder> {
   /* Trip/service run identifier */
-  int runId;
+
+  @BuiltValueField(wireName: 'run_id')
+  int get runId;
   /* Route identifier */
-  int routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  int get routeId;
   /* Transport mode identifier */
-  int routeType;
+
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
   /* stop_id of final stop of run */
-  int finalStopId;
+
+  @BuiltValueField(wireName: 'final_stop_id')
+  int get finalStopId;
   /* Name of destination of run */
-  String destinationName;
+
+  @BuiltValueField(wireName: 'destination_name')
+  String get destinationName;
   /* Status of metropolitan train run; returns \"scheduled\" for other modes */
-  String status;
+
+  @BuiltValueField(wireName: 'status')
+  String get status;
   /* Direction of travel identifier */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Chronological sequence of the trip/service run on the route in direction. Order ascendingly by this field to get chronological order (earliest first) of runs with the same route_id and direction_id. */
-  int runSequence;
+
+  @BuiltValueField(wireName: 'run_sequence')
+  int get runSequence;
   /* The number of remaining skipped/express stations for the run/service from a stop */
-  int expressStopCount;
 
-  V3VehiclePosition vehiclePosition;
+  @BuiltValueField(wireName: 'express_stop_count')
+  int get expressStopCount;
 
-  V3VehicleDescriptor vehicleDescriptor;
-  V3Run();
+  @BuiltValueField(wireName: 'vehicle_position')
+  V3VehiclePosition get vehiclePosition;
 
-  @override
-  String toString() {
-    return 'V3Run[runId=$runId, routeId=$routeId, routeType=$routeType, finalStopId=$finalStopId, destinationName=$destinationName, status=$status, directionId=$directionId, runSequence=$runSequence, expressStopCount=$expressStopCount, vehiclePosition=$vehiclePosition, vehicleDescriptor=$vehicleDescriptor, ]';
+  @BuiltValueField(wireName: 'vehicle_descriptor')
+  V3VehicleDescriptor get vehicleDescriptor;
+
+  V3Run._();
+
+  factory V3Run([updates(V3RunBuilder b)]) = _$V3Run;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Run.serializer, this);
   }
 
-  V3Run.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['run_id'] == null) {
-      runId = null;
-    } else {
-      runId = json['run_id'];
-    }
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
-    if (json['final_stop_id'] == null) {
-      finalStopId = null;
-    } else {
-      finalStopId = json['final_stop_id'];
-    }
-    if (json['destination_name'] == null) {
-      destinationName = null;
-    } else {
-      destinationName = json['destination_name'];
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = json['status'];
-    }
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['run_sequence'] == null) {
-      runSequence = null;
-    } else {
-      runSequence = json['run_sequence'];
-    }
-    if (json['express_stop_count'] == null) {
-      expressStopCount = null;
-    } else {
-      expressStopCount = json['express_stop_count'];
-    }
-    if (json['vehicle_position'] == null) {
-      vehiclePosition = null;
-    } else {
-      vehiclePosition = V3VehiclePosition.fromJson(json['vehicle_position']);
-    }
-    if (json['vehicle_descriptor'] == null) {
-      vehicleDescriptor = null;
-    } else {
-      vehicleDescriptor =
-          V3VehicleDescriptor.fromJson(json['vehicle_descriptor']);
-    }
+  static V3Run fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Run.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (runId != null) json['run_id'] = runId;
-    if (routeId != null) json['route_id'] = routeId;
-    if (routeType != null) json['route_type'] = routeType;
-    if (finalStopId != null) json['final_stop_id'] = finalStopId;
-    if (destinationName != null) json['destination_name'] = destinationName;
-    if (status != null) json['status'] = status;
-    if (directionId != null) json['direction_id'] = directionId;
-    if (runSequence != null) json['run_sequence'] = runSequence;
-    if (expressStopCount != null) json['express_stop_count'] = expressStopCount;
-    if (vehiclePosition != null) json['vehicle_position'] = vehiclePosition;
-    if (vehicleDescriptor != null) {
-      json['vehicle_descriptor'] = vehicleDescriptor;
-    }
-    return json;
-  }
-
-  static List<V3Run> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Run>()
-        : json.map((value) => V3Run.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Run> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Run>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3Run.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Run> get serializer => _$v3RunSerializer;
 }

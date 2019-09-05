@@ -1,4 +1,7 @@
-part of ptv_api_client.api;
+import 'dart:convert';
+
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/auth/authentication.dart';
 
 class HttpBasicAuth implements Authentication {
   String _username;

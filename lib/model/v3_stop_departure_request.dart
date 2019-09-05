@@ -1,77 +1,52 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopDepartureRequest {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_stop_departure_request_route_direction.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_departure_request.g.dart';
+
+abstract class V3StopDepartureRequest
+    implements Built<V3StopDepartureRequest, V3StopDepartureRequestBuilder> {
   /* Number identifying transport mode; values returned via RouteTypes API */
-  int routeType;
+
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
   //enum routeTypeEnum {  0,  1,  2,  3,  4,  };{
   /* Identifier of stop; values returned by Stops API */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Maximum number of results returned */
-  int maxResults;
+
+  @BuiltValueField(wireName: 'max_results')
+  int get maxResults;
   /* Indicates that stop_id parameter will accept \"GTFS stop_id\" data and route_directions[x].route_id parameters will accept route_gtfs_id data */
-  bool gtfs;
+
+  @BuiltValueField(wireName: 'gtfs')
+  bool get gtfs;
   /* The route directions to find departures for at this stop. */
-  List<V3StopDepartureRequestRouteDirection> routeDirections = [];
-  V3StopDepartureRequest();
 
-  @override
-  String toString() {
-    return 'V3StopDepartureRequest[routeType=$routeType, stopId=$stopId, maxResults=$maxResults, gtfs=$gtfs, routeDirections=$routeDirections, ]';
+  @BuiltValueField(wireName: 'route_directions')
+  BuiltList<V3StopDepartureRequestRouteDirection> get routeDirections;
+
+  V3StopDepartureRequest._();
+
+  factory V3StopDepartureRequest([updates(V3StopDepartureRequestBuilder b)]) =
+      _$V3StopDepartureRequest;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopDepartureRequest.serializer, this);
   }
 
-  V3StopDepartureRequest.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['max_results'] == null) {
-      maxResults = null;
-    } else {
-      maxResults = json['max_results'];
-    }
-    if (json['gtfs'] == null) {
-      gtfs = null;
-    } else {
-      gtfs = json['gtfs'];
-    }
-    if (json['route_directions'] == null) {
-      routeDirections = null;
-    } else {
-      routeDirections = V3StopDepartureRequestRouteDirection.listFromJson(
-          json['route_directions']);
-    }
+  static V3StopDepartureRequest fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopDepartureRequest.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeType != null) json['route_type'] = routeType;
-    if (stopId != null) json['stop_id'] = stopId;
-    if (maxResults != null) json['max_results'] = maxResults;
-    if (gtfs != null) json['gtfs'] = gtfs;
-    if (routeDirections != null) json['route_directions'] = routeDirections;
-    return json;
-  }
-
-  static List<V3StopDepartureRequest> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopDepartureRequest>()
-        : json.map((value) => V3StopDepartureRequest.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopDepartureRequest> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3StopDepartureRequest>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3StopDepartureRequest.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopDepartureRequest> get serializer =>
+      _$v3StopDepartureRequestSerializer;
 }

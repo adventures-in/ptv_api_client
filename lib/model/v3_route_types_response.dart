@@ -1,51 +1,39 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3RouteTypesResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_route_type.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_route_types_response.g.dart';
+
+abstract class V3RouteTypesResponse
+    implements Built<V3RouteTypesResponse, V3RouteTypesResponseBuilder> {
   /* Transport mode identifiers */
-  List<V3RouteType> routeTypes = [];
 
-  V3Status status;
-  V3RouteTypesResponse();
+  @BuiltValueField(wireName: 'route_types')
+  BuiltList<V3RouteType> get routeTypes;
 
-  @override
-  String toString() {
-    return 'V3RouteTypesResponse[routeTypes=$routeTypes, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3RouteTypesResponse._();
+
+  factory V3RouteTypesResponse([updates(V3RouteTypesResponseBuilder b)]) =
+      _$V3RouteTypesResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3RouteTypesResponse.serializer, this);
   }
 
-  V3RouteTypesResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_types'] == null) {
-      routeTypes = null;
-    } else {
-      routeTypes = V3RouteType.listFromJson(json['route_types']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3RouteTypesResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3RouteTypesResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeTypes != null) json['route_types'] = routeTypes;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3RouteTypesResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3RouteTypesResponse>()
-        : json.map((value) => V3RouteTypesResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3RouteTypesResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3RouteTypesResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3RouteTypesResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3RouteTypesResponse> get serializer =>
+      _$v3RouteTypesResponseSerializer;
 }

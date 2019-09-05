@@ -1,53 +1,42 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DisruptionModesResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_disruption_mode.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_disruption_modes_response.g.dart';
+
+abstract class V3DisruptionModesResponse
+    implements
+        Built<V3DisruptionModesResponse, V3DisruptionModesResponseBuilder> {
   /* Transport mode identifiers */
-  List<V3DisruptionMode> disruptionModes = [];
 
-  V3Status status;
-  V3DisruptionModesResponse();
+  @BuiltValueField(wireName: 'disruption_modes')
+  BuiltList<V3DisruptionMode> get disruptionModes;
 
-  @override
-  String toString() {
-    return 'V3DisruptionModesResponse[disruptionModes=$disruptionModes, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3DisruptionModesResponse._();
+
+  factory V3DisruptionModesResponse(
+          [updates(V3DisruptionModesResponseBuilder b)]) =
+      _$V3DisruptionModesResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3DisruptionModesResponse.serializer, this);
   }
 
-  V3DisruptionModesResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['disruption_modes'] == null) {
-      disruptionModes = null;
-    } else {
-      disruptionModes = V3DisruptionMode.listFromJson(json['disruption_modes']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3DisruptionModesResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DisruptionModesResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (disruptionModes != null) json['disruption_modes'] = disruptionModes;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3DisruptionModesResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DisruptionModesResponse>()
-        : json
-            .map((value) => V3DisruptionModesResponse.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3DisruptionModesResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3DisruptionModesResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DisruptionModesResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DisruptionModesResponse> get serializer =>
+      _$v3DisruptionModesResponseSerializer;
 }

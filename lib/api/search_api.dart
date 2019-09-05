@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class SearchApi {
   final ApiClient apiClient;
@@ -35,39 +40,39 @@ class SearchApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (routeTypes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "route_types", routeTypes));
     }
     if (latitude != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "latitude", latitude));
+          convertParametersForCollectionFormat("", "latitude", latitude));
     }
     if (longitude != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "longitude", longitude));
+          convertParametersForCollectionFormat("", "longitude", longitude));
     }
     if (maxDistance != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "max_distance", maxDistance));
     }
     if (includeAddresses != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "include_addresses", includeAddresses));
     }
     if (includeOutlets != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "include_outlets", includeOutlets));
     }
     if (matchStopBySuburb != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "match_stop_by_suburb", matchStopBySuburb));
     }
     if (matchRouteBySuburb != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "match_route_by_suburb", matchRouteBySuburb));
     }
     if (matchStopByGtfsStopId != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "match_stop_by_gtfs_stop_id", matchStopByGtfsStopId));
     }
 
@@ -87,10 +92,9 @@ class SearchApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3SearchResult')
-          as V3SearchResult;
+      return V3SearchResult.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

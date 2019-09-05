@@ -1,146 +1,85 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Disruptions {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_disruption.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_disruptions.g.dart';
+
+abstract class V3Disruptions
+    implements Built<V3Disruptions, V3DisruptionsBuilder> {
   /* Subset of disruption information applicable to multiple route_types */
-  List<V3Disruption> general = [];
+
+  @BuiltValueField(wireName: 'general')
+  BuiltList<V3Disruption> get general;
   /* Subset of disruption information applicable to metropolitan train */
-  List<V3Disruption> metroTrain = [];
+
+  @BuiltValueField(wireName: 'metro_train')
+  BuiltList<V3Disruption> get metroTrain;
   /* Subset of disruption information applicable to metropolitan tram */
-  List<V3Disruption> metroTram = [];
+
+  @BuiltValueField(wireName: 'metro_tram')
+  BuiltList<V3Disruption> get metroTram;
   /* Subset of disruption information applicable to metropolitan bus */
-  List<V3Disruption> metroBus = [];
+
+  @BuiltValueField(wireName: 'metro_bus')
+  BuiltList<V3Disruption> get metroBus;
   /* Subset of disruption information applicable to V/Line train */
-  List<V3Disruption> regionalTrain = [];
+
+  @BuiltValueField(wireName: 'regional_train')
+  BuiltList<V3Disruption> get regionalTrain;
   /* Subset of disruption information applicable to V/Line coach */
-  List<V3Disruption> regionalCoach = [];
+
+  @BuiltValueField(wireName: 'regional_coach')
+  BuiltList<V3Disruption> get regionalCoach;
   /* Subset of disruption information applicable to regional bus */
-  List<V3Disruption> regionalBus = [];
+
+  @BuiltValueField(wireName: 'regional_bus')
+  BuiltList<V3Disruption> get regionalBus;
   /* Subset of disruption information applicable to school bus */
-  List<V3Disruption> schoolBus = [];
+
+  @BuiltValueField(wireName: 'school_bus')
+  BuiltList<V3Disruption> get schoolBus;
   /* Subset of disruption information applicable to telebus services */
-  List<V3Disruption> telebus = [];
+
+  @BuiltValueField(wireName: 'telebus')
+  BuiltList<V3Disruption> get telebus;
   /* Subset of disruption information applicable to night bus */
-  List<V3Disruption> nightBus = [];
+
+  @BuiltValueField(wireName: 'night_bus')
+  BuiltList<V3Disruption> get nightBus;
   /* Subset of disruption information applicable to ferry */
-  List<V3Disruption> ferry = [];
+
+  @BuiltValueField(wireName: 'ferry')
+  BuiltList<V3Disruption> get ferry;
   /* Subset of disruption information applicable to interstate train */
-  List<V3Disruption> interstateTrain = [];
+
+  @BuiltValueField(wireName: 'interstate_train')
+  BuiltList<V3Disruption> get interstateTrain;
   /* Subset of disruption information applicable to skybus */
-  List<V3Disruption> skybus = [];
+
+  @BuiltValueField(wireName: 'skybus')
+  BuiltList<V3Disruption> get skybus;
   /* Subset of disruption information applicable to taxi */
-  List<V3Disruption> taxi = [];
-  V3Disruptions();
 
-  @override
-  String toString() {
-    return 'V3Disruptions[general=$general, metroTrain=$metroTrain, metroTram=$metroTram, metroBus=$metroBus, regionalTrain=$regionalTrain, regionalCoach=$regionalCoach, regionalBus=$regionalBus, schoolBus=$schoolBus, telebus=$telebus, nightBus=$nightBus, ferry=$ferry, interstateTrain=$interstateTrain, skybus=$skybus, taxi=$taxi, ]';
+  @BuiltValueField(wireName: 'taxi')
+  BuiltList<V3Disruption> get taxi;
+
+  V3Disruptions._();
+
+  factory V3Disruptions([updates(V3DisruptionsBuilder b)]) = _$V3Disruptions;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Disruptions.serializer, this);
   }
 
-  V3Disruptions.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['general'] == null) {
-      general = null;
-    } else {
-      general = V3Disruption.listFromJson(json['general']);
-    }
-    if (json['metro_train'] == null) {
-      metroTrain = null;
-    } else {
-      metroTrain = V3Disruption.listFromJson(json['metro_train']);
-    }
-    if (json['metro_tram'] == null) {
-      metroTram = null;
-    } else {
-      metroTram = V3Disruption.listFromJson(json['metro_tram']);
-    }
-    if (json['metro_bus'] == null) {
-      metroBus = null;
-    } else {
-      metroBus = V3Disruption.listFromJson(json['metro_bus']);
-    }
-    if (json['regional_train'] == null) {
-      regionalTrain = null;
-    } else {
-      regionalTrain = V3Disruption.listFromJson(json['regional_train']);
-    }
-    if (json['regional_coach'] == null) {
-      regionalCoach = null;
-    } else {
-      regionalCoach = V3Disruption.listFromJson(json['regional_coach']);
-    }
-    if (json['regional_bus'] == null) {
-      regionalBus = null;
-    } else {
-      regionalBus = V3Disruption.listFromJson(json['regional_bus']);
-    }
-    if (json['school_bus'] == null) {
-      schoolBus = null;
-    } else {
-      schoolBus = V3Disruption.listFromJson(json['school_bus']);
-    }
-    if (json['telebus'] == null) {
-      telebus = null;
-    } else {
-      telebus = V3Disruption.listFromJson(json['telebus']);
-    }
-    if (json['night_bus'] == null) {
-      nightBus = null;
-    } else {
-      nightBus = V3Disruption.listFromJson(json['night_bus']);
-    }
-    if (json['ferry'] == null) {
-      ferry = null;
-    } else {
-      ferry = V3Disruption.listFromJson(json['ferry']);
-    }
-    if (json['interstate_train'] == null) {
-      interstateTrain = null;
-    } else {
-      interstateTrain = V3Disruption.listFromJson(json['interstate_train']);
-    }
-    if (json['skybus'] == null) {
-      skybus = null;
-    } else {
-      skybus = V3Disruption.listFromJson(json['skybus']);
-    }
-    if (json['taxi'] == null) {
-      taxi = null;
-    } else {
-      taxi = V3Disruption.listFromJson(json['taxi']);
-    }
+  static V3Disruptions fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Disruptions.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (general != null) json['general'] = general;
-    if (metroTrain != null) json['metro_train'] = metroTrain;
-    if (metroTram != null) json['metro_tram'] = metroTram;
-    if (metroBus != null) json['metro_bus'] = metroBus;
-    if (regionalTrain != null) json['regional_train'] = regionalTrain;
-    if (regionalCoach != null) json['regional_coach'] = regionalCoach;
-    if (regionalBus != null) json['regional_bus'] = regionalBus;
-    if (schoolBus != null) json['school_bus'] = schoolBus;
-    if (telebus != null) json['telebus'] = telebus;
-    if (nightBus != null) json['night_bus'] = nightBus;
-    if (ferry != null) json['ferry'] = ferry;
-    if (interstateTrain != null) json['interstate_train'] = interstateTrain;
-    if (skybus != null) json['skybus'] = skybus;
-    if (taxi != null) json['taxi'] = taxi;
-    return json;
-  }
-
-  static List<V3Disruptions> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Disruptions>()
-        : json.map((value) => V3Disruptions.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Disruptions> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Disruptions>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3Disruptions.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Disruptions> get serializer => _$v3DisruptionsSerializer;
 }

@@ -1,50 +1,38 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3ErrorResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_error_response.g.dart';
+
+abstract class V3ErrorResponse
+    implements Built<V3ErrorResponse, V3ErrorResponseBuilder> {
   /* Error message */
-  String message;
 
-  V3Status status;
-  V3ErrorResponse();
+  @BuiltValueField(wireName: 'message')
+  String get message;
 
-  @override
-  String toString() {
-    return 'V3ErrorResponse[message=$message, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3ErrorResponse._();
+
+  factory V3ErrorResponse([updates(V3ErrorResponseBuilder b)]) =
+      _$V3ErrorResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3ErrorResponse.serializer, this);
   }
 
-  V3ErrorResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['message'] == null) {
-      message = null;
-    } else {
-      message = json['message'];
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3ErrorResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3ErrorResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (message != null) json['message'] = message;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3ErrorResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3ErrorResponse>()
-        : json.map((value) => V3ErrorResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3ErrorResponse> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3ErrorResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3ErrorResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3ErrorResponse> get serializer =>
+      _$v3ErrorResponseSerializer;
 }

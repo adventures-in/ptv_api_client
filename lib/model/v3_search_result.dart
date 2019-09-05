@@ -1,66 +1,48 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3SearchResult {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_result_outlet.dart';
+import 'package:ptv_api_client/model/v3_result_route.dart';
+import 'package:ptv_api_client/model/v3_result_stop.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_search_result.g.dart';
+
+abstract class V3SearchResult
+    implements Built<V3SearchResult, V3SearchResultBuilder> {
   /* Train stations, tram stops, bus stops, regional coach stops or Night Bus stops */
-  List<V3ResultStop> stops = [];
+
+  @BuiltValueField(wireName: 'stops')
+  BuiltList<V3ResultStop> get stops;
   /* Train lines, tram routes, bus routes, regional coach routes, Night Bus routes */
-  List<V3ResultRoute> routes = [];
+
+  @BuiltValueField(wireName: 'routes')
+  BuiltList<V3ResultRoute> get routes;
   /* myki ticket outlets */
-  List<V3ResultOutlet> outlets = [];
 
-  V3Status status;
-  V3SearchResult();
+  @BuiltValueField(wireName: 'outlets')
+  BuiltList<V3ResultOutlet> get outlets;
 
-  @override
-  String toString() {
-    return 'V3SearchResult[stops=$stops, routes=$routes, outlets=$outlets, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3SearchResult._();
+
+  factory V3SearchResult([updates(V3SearchResultBuilder b)]) = _$V3SearchResult;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3SearchResult.serializer, this);
   }
 
-  V3SearchResult.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stops'] == null) {
-      stops = null;
-    } else {
-      stops = V3ResultStop.listFromJson(json['stops']);
-    }
-    if (json['routes'] == null) {
-      routes = null;
-    } else {
-      routes = V3ResultRoute.listFromJson(json['routes']);
-    }
-    if (json['outlets'] == null) {
-      outlets = null;
-    } else {
-      outlets = V3ResultOutlet.listFromJson(json['outlets']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3SearchResult fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3SearchResult.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stops != null) json['stops'] = stops;
-    if (routes != null) json['routes'] = routes;
-    if (outlets != null) json['outlets'] = outlets;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3SearchResult> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3SearchResult>()
-        : json.map((value) => V3SearchResult.fromJson(value)).toList();
-  }
-
-  static Map<String, V3SearchResult> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3SearchResult>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3SearchResult.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3SearchResult> get serializer =>
+      _$v3SearchResultSerializer;
 }

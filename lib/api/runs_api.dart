@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class RunsApi {
   final ApiClient apiClient;
@@ -42,10 +47,9 @@ class RunsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3RunsResponse')
-          as V3RunsResponse;
+      return V3RunsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -93,10 +97,9 @@ class RunsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3RunsResponse')
-          as V3RunsResponse;
+      return V3RunsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -139,10 +142,9 @@ class RunsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3RunsResponse')
-          as V3RunsResponse;
+      return V3RunsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -189,10 +191,9 @@ class RunsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3RunResponse')
-          as V3RunResponse;
+      return V3RunResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class StopsApi {
   final ApiClient apiClient;
@@ -38,35 +43,35 @@ class StopsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (stopLocation != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_location", stopLocation));
     }
     if (stopAmenities != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_amenities", stopAmenities));
     }
     if (stopAccessibility != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_accessibility", stopAccessibility));
     }
     if (stopContact != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_contact", stopContact));
     }
     if (stopTicket != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "stop_ticket", stopTicket));
+          convertParametersForCollectionFormat("", "stop_ticket", stopTicket));
     }
     if (gtfs != null) {
       queryParams
-          .addAll(_convertParametersForCollectionFormat("", "gtfs", gtfs));
+          .addAll(convertParametersForCollectionFormat("", "gtfs", gtfs));
     }
     if (stopStaffing != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_staffing", stopStaffing));
     }
     if (stopDisruptions != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_disruptions", stopDisruptions));
     }
 
@@ -86,10 +91,9 @@ class StopsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(_decodeBodyBytes(response), 'V3StopResponse')
-          as V3StopResponse;
+      return V3StopResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -125,19 +129,19 @@ class StopsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (routeTypes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "route_types", routeTypes));
     }
     if (maxResults != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "max_results", maxResults));
+          convertParametersForCollectionFormat("", "max_results", maxResults));
     }
     if (maxDistance != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "max_distance", maxDistance));
     }
     if (stopDisruptions != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_disruptions", stopDisruptions));
     }
 
@@ -157,11 +161,9 @@ class StopsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3StopsByDistanceResponse')
-          as V3StopsByDistanceResponse;
+      return V3StopsByDistanceResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -193,11 +195,11 @@ class StopsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (directionId != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "direction_id", directionId));
     }
     if (stopDisruptions != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "stop_disruptions", stopDisruptions));
     }
 
@@ -217,11 +219,9 @@ class StopsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3StopsOnRouteResponse')
-          as V3StopsOnRouteResponse;
+      return V3StopsOnRouteResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

@@ -1,51 +1,36 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Status {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_status.g.dart';
+
+abstract class V3Status implements Built<V3Status, V3StatusBuilder> {
   /* API Version number */
-  String version;
+
+  @BuiltValueField(wireName: 'version')
+  String get version;
   /* API system health status (0=offline, 1=online) */
-  int health;
+
+  @BuiltValueField(wireName: 'health')
+  int get health;
   //enum healthEnum {  0,  1,  };{
-  V3Status();
 
-  @override
-  String toString() {
-    return 'V3Status[version=$version, health=$health, ]';
+  V3Status._();
+
+  factory V3Status([updates(V3StatusBuilder b)]) = _$V3Status;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Status.serializer, this);
   }
 
-  V3Status.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['version'] == null) {
-      version = null;
-    } else {
-      version = json['version'];
-    }
-    if (json['health'] == null) {
-      health = null;
-    } else {
-      health = json['health'];
-    }
+  static V3Status fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Status.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (version != null) json['version'] = version;
-    if (health != null) json['health'] = health;
-    return json;
-  }
-
-  static List<V3Status> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Status>()
-        : json.map((value) => V3Status.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Status> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Status>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3Status.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Status> get serializer => _$v3StatusSerializer;
 }

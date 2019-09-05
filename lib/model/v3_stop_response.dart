@@ -1,57 +1,41 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopResponse {
-  V3StopDetails stop;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_disruption.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+import 'package:ptv_api_client/model/v3_stop_details.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_response.g.dart';
+
+abstract class V3StopResponse
+    implements Built<V3StopResponse, V3StopResponseBuilder> {
+  @BuiltValueField(wireName: 'stop')
+  V3StopDetails get stop;
   /* Disruption information applicable to relevant routes or stops */
-  Map<String, V3Disruption> disruptions = {};
 
-  V3Status status;
-  V3StopResponse();
+  @BuiltValueField(wireName: 'disruptions')
+  BuiltMap<String, V3Disruption> get disruptions;
 
-  @override
-  String toString() {
-    return 'V3StopResponse[stop=$stop, disruptions=$disruptions, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3StopResponse._();
+
+  factory V3StopResponse([updates(V3StopResponseBuilder b)]) = _$V3StopResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopResponse.serializer, this);
   }
 
-  V3StopResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stop'] == null) {
-      stop = null;
-    } else {
-      stop = V3StopDetails.fromJson(json['stop']);
-    }
-    if (json['disruptions'] == null) {
-      disruptions = null;
-    } else {
-      disruptions = V3Disruption.mapFromJson(json['disruptions']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3StopResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stop != null) json['stop'] = stop;
-    if (disruptions != null) json['disruptions'] = disruptions;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3StopResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopResponse>()
-        : json.map((value) => V3StopResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopResponse> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3StopResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3StopResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopResponse> get serializer =>
+      _$v3StopResponseSerializer;
 }

@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class DisruptionsApi {
   final ApiClient apiClient;
@@ -25,15 +30,15 @@ class DisruptionsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (routeTypes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "route_types", routeTypes));
     }
     if (disruptionModes != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "multi", "disruption_modes", disruptionModes));
     }
     if (disruptionStatus != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "disruption_status", disruptionStatus));
     }
 
@@ -53,11 +58,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionsResponse')
-          as V3DisruptionsResponse;
+      return V3DisruptionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -101,11 +104,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionResponse')
-          as V3DisruptionResponse;
+      return V3DisruptionResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -143,11 +144,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionModesResponse')
-          as V3DisruptionModesResponse;
+      return V3DisruptionModesResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -175,7 +174,7 @@ class DisruptionsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (disruptionStatus != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "disruption_status", disruptionStatus));
     }
 
@@ -195,11 +194,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionsResponse')
-          as V3DisruptionsResponse;
+      return V3DisruptionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -232,7 +229,7 @@ class DisruptionsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (disruptionStatus != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "disruption_status", disruptionStatus));
     }
 
@@ -252,11 +249,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionsResponse')
-          as V3DisruptionsResponse;
+      return V3DisruptionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -284,7 +279,7 @@ class DisruptionsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (disruptionStatus != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "disruption_status", disruptionStatus));
     }
 
@@ -304,11 +299,9 @@ class DisruptionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DisruptionsResponse')
-          as V3DisruptionsResponse;
+      return V3DisruptionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

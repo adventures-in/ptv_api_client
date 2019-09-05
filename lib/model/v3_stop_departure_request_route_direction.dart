@@ -1,63 +1,47 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopDepartureRequestRouteDirection {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_departure_request_route_direction.g.dart';
+
+abstract class V3StopDepartureRequestRouteDirection
+    implements
+        Built<V3StopDepartureRequestRouteDirection,
+            V3StopDepartureRequestRouteDirectionBuilder> {
   /* Identifier of route; values returned by Routes API - v3/routes */
-  String routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  String get routeId;
   /* Direction of travel identifier; values returned by Directions API - v3/directions */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Name of direction of travel; values returned by Directions API - v3/directions */
-  String directionName;
-  V3StopDepartureRequestRouteDirection();
 
-  @override
-  String toString() {
-    return 'V3StopDepartureRequestRouteDirection[routeId=$routeId, directionId=$directionId, directionName=$directionName, ]';
+  @BuiltValueField(wireName: 'direction_name')
+  String get directionName;
+
+  V3StopDepartureRequestRouteDirection._();
+
+  factory V3StopDepartureRequestRouteDirection(
+          [updates(V3StopDepartureRequestRouteDirectionBuilder b)]) =
+      _$V3StopDepartureRequestRouteDirection;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3StopDepartureRequestRouteDirection.serializer, this);
   }
 
-  V3StopDepartureRequestRouteDirection.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['direction_name'] == null) {
-      directionName = null;
-    } else {
-      directionName = json['direction_name'];
-    }
+  static V3StopDepartureRequestRouteDirection fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopDepartureRequestRouteDirection.serializer,
+        json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeId != null) json['route_id'] = routeId;
-    if (directionId != null) json['direction_id'] = directionId;
-    if (directionName != null) json['direction_name'] = directionName;
-    return json;
-  }
-
-  static List<V3StopDepartureRequestRouteDirection> listFromJson(
-      List<dynamic> json) {
-    return json == null
-        ? List<V3StopDepartureRequestRouteDirection>()
-        : json
-            .map(
-                (value) => V3StopDepartureRequestRouteDirection.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3StopDepartureRequestRouteDirection> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3StopDepartureRequestRouteDirection>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3StopDepartureRequestRouteDirection.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopDepartureRequestRouteDirection> get serializer =>
+      _$v3StopDepartureRequestRouteDirectionSerializer;
 }

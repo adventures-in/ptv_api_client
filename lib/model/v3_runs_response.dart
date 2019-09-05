@@ -1,50 +1,38 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3RunsResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_run.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_runs_response.g.dart';
+
+abstract class V3RunsResponse
+    implements Built<V3RunsResponse, V3RunsResponseBuilder> {
   /* Individual trips/services of a route */
-  List<V3Run> runs = [];
 
-  V3Status status;
-  V3RunsResponse();
+  @BuiltValueField(wireName: 'runs')
+  BuiltList<V3Run> get runs;
 
-  @override
-  String toString() {
-    return 'V3RunsResponse[runs=$runs, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3RunsResponse._();
+
+  factory V3RunsResponse([updates(V3RunsResponseBuilder b)]) = _$V3RunsResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3RunsResponse.serializer, this);
   }
 
-  V3RunsResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['runs'] == null) {
-      runs = null;
-    } else {
-      runs = V3Run.listFromJson(json['runs']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3RunsResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3RunsResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (runs != null) json['runs'] = runs;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3RunsResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3RunsResponse>()
-        : json.map((value) => V3RunsResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3RunsResponse> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3RunsResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3RunsResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3RunsResponse> get serializer =>
+      _$v3RunsResponseSerializer;
 }

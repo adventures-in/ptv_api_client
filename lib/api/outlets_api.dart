@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class OutletsApi {
   final ApiClient apiClient;
@@ -22,7 +27,7 @@ class OutletsApi {
     Map<String, String> formParams = {};
     if (maxResults != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "max_results", maxResults));
+          convertParametersForCollectionFormat("", "max_results", maxResults));
     }
 
     List<String> contentTypes = [];
@@ -41,10 +46,9 @@ class OutletsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-          _decodeBodyBytes(response), 'V3OutletResponse') as V3OutletResponse;
+      return V3OutletResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -77,12 +81,12 @@ class OutletsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     if (maxDistance != null) {
-      queryParams.addAll(_convertParametersForCollectionFormat(
+      queryParams.addAll(convertParametersForCollectionFormat(
           "", "max_distance", maxDistance));
     }
     if (maxResults != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "max_results", maxResults));
+          convertParametersForCollectionFormat("", "max_results", maxResults));
     }
 
     List<String> contentTypes = [];
@@ -101,11 +105,9 @@ class OutletsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3OutletGeolocationResponse')
-          as V3OutletGeolocationResponse;
+      return V3OutletGeolocationResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

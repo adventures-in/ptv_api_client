@@ -1,132 +1,71 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Departure {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_departure.g.dart';
+
+abstract class V3Departure implements Built<V3Departure, V3DepartureBuilder> {
   /* Stop identifier */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Route identifier */
-  int routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  int get routeId;
   /* Trip/service run identifier */
-  int runId;
+
+  @BuiltValueField(wireName: 'run_id')
+  int get runId;
   /* Direction of travel identifier */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Disruption information identifier(s) */
-  List<int> disruptionIds = [];
+
+  @BuiltValueField(wireName: 'disruption_ids')
+  BuiltList<int> get disruptionIds;
   /* Scheduled (i.e. timetabled) departure time and date in ISO 8601 UTC format */
-  DateTime scheduledDepartureUtc;
+
+  @BuiltValueField(wireName: 'scheduled_departure_utc')
+  DateTime get scheduledDepartureUtc;
   /* Real-time estimate of departure time and date in ISO 8601 UTC format */
-  DateTime estimatedDepartureUtc;
+
+  @BuiltValueField(wireName: 'estimated_departure_utc')
+  DateTime get estimatedDepartureUtc;
   /* Indicates if the metropolitan train service is at the platform at the time of query; returns false for other modes */
-  bool atPlatform;
+
+  @BuiltValueField(wireName: 'at_platform')
+  bool get atPlatform;
   /* Platform number at stop (metropolitan train only; returns null for other modes) */
-  String platformNumber;
+
+  @BuiltValueField(wireName: 'platform_number')
+  String get platformNumber;
   /* Flag indicating special condition for run (e.g. RR Reservations Required, GC Guaranteed Connection, DOO Drop Off Only, PUO Pick Up Only, MO Mondays only, TU Tuesdays only, WE Wednesdays only, TH Thursdays only, FR Fridays only, SS School days only; ignore E flag) */
-  String flags;
+
+  @BuiltValueField(wireName: 'flags')
+  String get flags;
   /* Chronological sequence of the departure for the run on the route. Order ascendingly by this field to get chronological order (earliest first) of departures with the same route_id and run_id. */
-  int departureSequence;
-  V3Departure();
 
-  @override
-  String toString() {
-    return 'V3Departure[stopId=$stopId, routeId=$routeId, runId=$runId, directionId=$directionId, disruptionIds=$disruptionIds, scheduledDepartureUtc=$scheduledDepartureUtc, estimatedDepartureUtc=$estimatedDepartureUtc, atPlatform=$atPlatform, platformNumber=$platformNumber, flags=$flags, departureSequence=$departureSequence, ]';
+  @BuiltValueField(wireName: 'departure_sequence')
+  int get departureSequence;
+
+  V3Departure._();
+
+  factory V3Departure([updates(V3DepartureBuilder b)]) = _$V3Departure;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Departure.serializer, this);
   }
 
-  V3Departure.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['run_id'] == null) {
-      runId = null;
-    } else {
-      runId = json['run_id'];
-    }
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['disruption_ids'] == null) {
-      disruptionIds = null;
-    } else {
-      disruptionIds = (json['disruption_ids'] as List).cast<int>();
-    }
-    if (json['scheduled_departure_utc'] == null) {
-      scheduledDepartureUtc = null;
-    } else {
-      scheduledDepartureUtc = DateTime.parse(json['scheduled_departure_utc']);
-    }
-    if (json['estimated_departure_utc'] == null) {
-      estimatedDepartureUtc = null;
-    } else {
-      estimatedDepartureUtc = DateTime.parse(json['estimated_departure_utc']);
-    }
-    if (json['at_platform'] == null) {
-      atPlatform = null;
-    } else {
-      atPlatform = json['at_platform'];
-    }
-    if (json['platform_number'] == null) {
-      platformNumber = null;
-    } else {
-      platformNumber = json['platform_number'];
-    }
-    if (json['flags'] == null) {
-      flags = null;
-    } else {
-      flags = json['flags'];
-    }
-    if (json['departure_sequence'] == null) {
-      departureSequence = null;
-    } else {
-      departureSequence = json['departure_sequence'];
-    }
+  static V3Departure fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Departure.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stopId != null) json['stop_id'] = stopId;
-    if (routeId != null) json['route_id'] = routeId;
-    if (runId != null) json['run_id'] = runId;
-    if (directionId != null) json['direction_id'] = directionId;
-    if (disruptionIds != null) json['disruption_ids'] = disruptionIds;
-    if (scheduledDepartureUtc != null) {
-      json['scheduled_departure_utc'] = scheduledDepartureUtc == null
-          ? null
-          : scheduledDepartureUtc.toUtc().toIso8601String();
-    }
-    if (estimatedDepartureUtc != null) {
-      json['estimated_departure_utc'] = estimatedDepartureUtc == null
-          ? null
-          : estimatedDepartureUtc.toUtc().toIso8601String();
-    }
-    if (atPlatform != null) json['at_platform'] = atPlatform;
-    if (platformNumber != null) json['platform_number'] = platformNumber;
-    if (flags != null) json['flags'] = flags;
-    if (departureSequence != null) {
-      json['departure_sequence'] = departureSequence;
-    }
-    return json;
-  }
-
-  static List<V3Departure> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Departure>()
-        : json.map((value) => V3Departure.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Departure> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Departure>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3Departure.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Departure> get serializer => _$v3DepartureSerializer;
 }

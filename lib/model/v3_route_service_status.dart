@@ -1,53 +1,35 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3RouteServiceStatus {
-  String description;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-  DateTime timestamp;
-  V3RouteServiceStatus();
+import 'package:ptv_api_client/serializers.dart';
 
-  @override
-  String toString() {
-    return 'V3RouteServiceStatus[description=$description, timestamp=$timestamp, ]';
+part 'v3_route_service_status.g.dart';
+
+abstract class V3RouteServiceStatus
+    implements Built<V3RouteServiceStatus, V3RouteServiceStatusBuilder> {
+  @BuiltValueField(wireName: 'description')
+  String get description;
+
+  @BuiltValueField(wireName: 'timestamp')
+  DateTime get timestamp;
+
+  V3RouteServiceStatus._();
+
+  factory V3RouteServiceStatus([updates(V3RouteServiceStatusBuilder b)]) =
+      _$V3RouteServiceStatus;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3RouteServiceStatus.serializer, this);
   }
 
-  V3RouteServiceStatus.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['description'] == null) {
-      description = null;
-    } else {
-      description = json['description'];
-    }
-    if (json['timestamp'] == null) {
-      timestamp = null;
-    } else {
-      timestamp = DateTime.parse(json['timestamp']);
-    }
+  static V3RouteServiceStatus fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3RouteServiceStatus.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (description != null) json['description'] = description;
-    if (timestamp != null) {
-      json['timestamp'] =
-          timestamp == null ? null : timestamp.toUtc().toIso8601String();
-    }
-    return json;
-  }
-
-  static List<V3RouteServiceStatus> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3RouteServiceStatus>()
-        : json.map((value) => V3RouteServiceStatus.fromJson(value)).toList();
-  }
-
-  static Map<String, V3RouteServiceStatus> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3RouteServiceStatus>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3RouteServiceStatus.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3RouteServiceStatus> get serializer =>
+      _$v3RouteServiceStatusSerializer;
 }

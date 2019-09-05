@@ -1,50 +1,35 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopBase {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_base.g.dart';
+
+abstract class V3StopBase implements Built<V3StopBase, V3StopBaseBuilder> {
   /* Stop identifier */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Name of stop */
-  String stopName;
-  V3StopBase();
 
-  @override
-  String toString() {
-    return 'V3StopBase[stopId=$stopId, stopName=$stopName, ]';
+  @BuiltValueField(wireName: 'stop_name')
+  String get stopName;
+
+  V3StopBase._();
+
+  factory V3StopBase([updates(V3StopBaseBuilder b)]) = _$V3StopBase;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopBase.serializer, this);
   }
 
-  V3StopBase.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['stop_name'] == null) {
-      stopName = null;
-    } else {
-      stopName = json['stop_name'];
-    }
+  static V3StopBase fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopBase.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stopId != null) json['stop_id'] = stopId;
-    if (stopName != null) json['stop_name'] = stopName;
-    return json;
-  }
-
-  static List<V3StopBase> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopBase>()
-        : json.map((value) => V3StopBase.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopBase> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3StopBase>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3StopBase.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopBase> get serializer => _$v3StopBaseSerializer;
 }

@@ -1,50 +1,35 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopGps {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_gps.g.dart';
+
+abstract class V3StopGps implements Built<V3StopGps, V3StopGpsBuilder> {
   /* Geographic coordinate of latitude at stop */
-  double latitude;
+
+  @BuiltValueField(wireName: 'latitude')
+  double get latitude;
   /* Geographic coordinate of longitude at stop */
-  double longitude;
-  V3StopGps();
 
-  @override
-  String toString() {
-    return 'V3StopGps[latitude=$latitude, longitude=$longitude, ]';
+  @BuiltValueField(wireName: 'longitude')
+  double get longitude;
+
+  V3StopGps._();
+
+  factory V3StopGps([updates(V3StopGpsBuilder b)]) = _$V3StopGps;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopGps.serializer, this);
   }
 
-  V3StopGps.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['latitude'] == null) {
-      latitude = null;
-    } else {
-      latitude = json['latitude'];
-    }
-    if (json['longitude'] == null) {
-      longitude = null;
-    } else {
-      longitude = json['longitude'];
-    }
+  static V3StopGps fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopGps.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (latitude != null) json['latitude'] = latitude;
-    if (longitude != null) json['longitude'] = longitude;
-    return json;
-  }
-
-  static List<V3StopGps> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopGps>()
-        : json.map((value) => V3StopGps.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopGps> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3StopGps>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3StopGps.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopGps> get serializer => _$v3StopGpsSerializer;
 }

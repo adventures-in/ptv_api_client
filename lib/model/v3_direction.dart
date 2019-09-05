@@ -1,66 +1,43 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Direction {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_direction.g.dart';
+
+abstract class V3Direction implements Built<V3Direction, V3DirectionBuilder> {
   /* Direction of travel identifier */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Name of direction of travel */
-  String directionName;
+
+  @BuiltValueField(wireName: 'direction_name')
+  String get directionName;
   /* Route identifier */
-  int routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  int get routeId;
   /* Transport mode identifier */
-  int routeType;
-  V3Direction();
 
-  @override
-  String toString() {
-    return 'V3Direction[directionId=$directionId, directionName=$directionName, routeId=$routeId, routeType=$routeType, ]';
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
+
+  V3Direction._();
+
+  factory V3Direction([updates(V3DirectionBuilder b)]) = _$V3Direction;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Direction.serializer, this);
   }
 
-  V3Direction.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['direction_name'] == null) {
-      directionName = null;
-    } else {
-      directionName = json['direction_name'];
-    }
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
+  static V3Direction fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Direction.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (directionId != null) json['direction_id'] = directionId;
-    if (directionName != null) json['direction_name'] = directionName;
-    if (routeId != null) json['route_id'] = routeId;
-    if (routeType != null) json['route_type'] = routeType;
-    return json;
-  }
-
-  static List<V3Direction> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Direction>()
-        : json.map((value) => V3Direction.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Direction> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Direction>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3Direction.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Direction> get serializer => _$v3DirectionSerializer;
 }

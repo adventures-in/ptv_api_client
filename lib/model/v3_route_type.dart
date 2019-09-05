@@ -1,50 +1,35 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3RouteType {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_route_type.g.dart';
+
+abstract class V3RouteType implements Built<V3RouteType, V3RouteTypeBuilder> {
   /* Name of transport mode */
-  String routeTypeName;
+
+  @BuiltValueField(wireName: 'route_type_name')
+  String get routeTypeName;
   /* Transport mode identifier */
-  int routeType;
-  V3RouteType();
 
-  @override
-  String toString() {
-    return 'V3RouteType[routeTypeName=$routeTypeName, routeType=$routeType, ]';
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
+
+  V3RouteType._();
+
+  factory V3RouteType([updates(V3RouteTypeBuilder b)]) = _$V3RouteType;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3RouteType.serializer, this);
   }
 
-  V3RouteType.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_type_name'] == null) {
-      routeTypeName = null;
-    } else {
-      routeTypeName = json['route_type_name'];
-    }
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
+  static V3RouteType fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3RouteType.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeTypeName != null) json['route_type_name'] = routeTypeName;
-    if (routeType != null) json['route_type'] = routeType;
-    return json;
-  }
-
-  static List<V3RouteType> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3RouteType>()
-        : json.map((value) => V3RouteType.fromJson(value)).toList();
-  }
-
-  static Map<String, V3RouteType> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3RouteType>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3RouteType.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3RouteType> get serializer => _$v3RouteTypeSerializer;
 }

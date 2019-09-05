@@ -81,10 +81,9 @@ var dateUtc = 2013-10-20T19:20:30+01:00; // DateTime | Filter by the date and ti
 var maxResults = 56; // int | Maximum number of results returned
 var includeCancelled = true; // bool | Indicates if cancelled services (if they exist) are returned (default = false) - metropolitan train only
 var expand = []; // List<String> | List objects to be returned in full (i.e. expanded) - options include: all, stop, route, run, direction, disruption
-var token = token_example; // String | Please ignore
 
 try {
-    var result = api_instance.departuresGetForStop(routeType, stopId, platformNumbers, directionId, lookBackwards, gtfs, dateUtc, maxResults, includeCancelled, expand, token);
+    var result = api_instance.departuresGetForStop(routeType, stopId, platformNumbers, directionId, lookBackwards, gtfs, dateUtc, maxResults, includeCancelled, expand);
     print(result);
 } catch (e) {
     print("Exception when calling DeparturesApi->departuresGetForStop: $e\n");

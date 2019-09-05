@@ -1,98 +1,60 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopOnRoute {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_on_route.g.dart';
+
+abstract class V3StopOnRoute
+    implements Built<V3StopOnRoute, V3StopOnRouteBuilder> {
   /* Disruption information identifier(s) */
-  List<int> disruptionIds = [];
+
+  @BuiltValueField(wireName: 'disruption_ids')
+  BuiltList<int> get disruptionIds;
   /* suburb of stop */
-  String stopSuburb;
+
+  @BuiltValueField(wireName: 'stop_suburb')
+  String get stopSuburb;
   /* Name of stop */
-  String stopName;
+
+  @BuiltValueField(wireName: 'stop_name')
+  String get stopName;
   /* Stop identifier */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Transport mode identifier */
-  int routeType;
+
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
   /* Geographic coordinate of latitude at stop */
-  double stopLatitude;
+
+  @BuiltValueField(wireName: 'stop_latitude')
+  double get stopLatitude;
   /* Geographic coordinate of longitude at stop */
-  double stopLongitude;
+
+  @BuiltValueField(wireName: 'stop_longitude')
+  double get stopLongitude;
   /* Sequence of the stop on the route/run; return 0 when route_id or run_id not specified. Order ascendingly by this field (when non zero) to get physical order (earliest first) of stops on the route_id/run_id. */
-  int stopSequence;
-  V3StopOnRoute();
 
-  @override
-  String toString() {
-    return 'V3StopOnRoute[disruptionIds=$disruptionIds, stopSuburb=$stopSuburb, stopName=$stopName, stopId=$stopId, routeType=$routeType, stopLatitude=$stopLatitude, stopLongitude=$stopLongitude, stopSequence=$stopSequence, ]';
+  @BuiltValueField(wireName: 'stop_sequence')
+  int get stopSequence;
+
+  V3StopOnRoute._();
+
+  factory V3StopOnRoute([updates(V3StopOnRouteBuilder b)]) = _$V3StopOnRoute;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopOnRoute.serializer, this);
   }
 
-  V3StopOnRoute.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['disruption_ids'] == null) {
-      disruptionIds = null;
-    } else {
-      disruptionIds = (json['disruption_ids'] as List).cast<int>();
-    }
-    if (json['stop_suburb'] == null) {
-      stopSuburb = null;
-    } else {
-      stopSuburb = json['stop_suburb'];
-    }
-    if (json['stop_name'] == null) {
-      stopName = null;
-    } else {
-      stopName = json['stop_name'];
-    }
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
-    if (json['stop_latitude'] == null) {
-      stopLatitude = null;
-    } else {
-      stopLatitude = json['stop_latitude'];
-    }
-    if (json['stop_longitude'] == null) {
-      stopLongitude = null;
-    } else {
-      stopLongitude = json['stop_longitude'];
-    }
-    if (json['stop_sequence'] == null) {
-      stopSequence = null;
-    } else {
-      stopSequence = json['stop_sequence'];
-    }
+  static V3StopOnRoute fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopOnRoute.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (disruptionIds != null) json['disruption_ids'] = disruptionIds;
-    if (stopSuburb != null) json['stop_suburb'] = stopSuburb;
-    if (stopName != null) json['stop_name'] = stopName;
-    if (stopId != null) json['stop_id'] = stopId;
-    if (routeType != null) json['route_type'] = routeType;
-    if (stopLatitude != null) json['stop_latitude'] = stopLatitude;
-    if (stopLongitude != null) json['stop_longitude'] = stopLongitude;
-    if (stopSequence != null) json['stop_sequence'] = stopSequence;
-    return json;
-  }
-
-  static List<V3StopOnRoute> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopOnRoute>()
-        : json.map((value) => V3StopOnRoute.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopOnRoute> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3StopOnRoute>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3StopOnRoute.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopOnRoute> get serializer => _$v3StopOnRouteSerializer;
 }

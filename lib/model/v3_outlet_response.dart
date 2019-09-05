@@ -1,50 +1,39 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3OutletResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_outlet.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_outlet_response.g.dart';
+
+abstract class V3OutletResponse
+    implements Built<V3OutletResponse, V3OutletResponseBuilder> {
   /* myki ticket outlets */
-  List<V3Outlet> outlets = [];
 
-  V3Status status;
-  V3OutletResponse();
+  @BuiltValueField(wireName: 'outlets')
+  BuiltList<V3Outlet> get outlets;
 
-  @override
-  String toString() {
-    return 'V3OutletResponse[outlets=$outlets, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3OutletResponse._();
+
+  factory V3OutletResponse([updates(V3OutletResponseBuilder b)]) =
+      _$V3OutletResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3OutletResponse.serializer, this);
   }
 
-  V3OutletResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['outlets'] == null) {
-      outlets = null;
-    } else {
-      outlets = V3Outlet.listFromJson(json['outlets']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3OutletResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3OutletResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (outlets != null) json['outlets'] = outlets;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3OutletResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3OutletResponse>()
-        : json.map((value) => V3OutletResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3OutletResponse> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3OutletResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3OutletResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3OutletResponse> get serializer =>
+      _$v3OutletResponseSerializer;
 }

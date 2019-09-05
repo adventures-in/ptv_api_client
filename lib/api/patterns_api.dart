@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class PatternsApi {
   final ApiClient apiClient;
@@ -36,14 +41,14 @@ class PatternsApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     queryParams.addAll(
-        _convertParametersForCollectionFormat("multi", "expand", expand));
+        convertParametersForCollectionFormat("multi", "expand", expand));
     if (stopId != null) {
       queryParams
-          .addAll(_convertParametersForCollectionFormat("", "stop_id", stopId));
+          .addAll(convertParametersForCollectionFormat("", "stop_id", stopId));
     }
     if (dateUtc != null) {
       queryParams.addAll(
-          _convertParametersForCollectionFormat("", "date_utc", dateUtc));
+          convertParametersForCollectionFormat("", "date_utc", dateUtc));
     }
 
     List<String> contentTypes = [];
@@ -62,10 +67,9 @@ class PatternsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-          _decodeBodyBytes(response), 'V3StoppingPattern') as V3StoppingPattern;
+      return V3StoppingPattern.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

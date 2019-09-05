@@ -1,50 +1,37 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DisruptionResponse {
-  V3Disruption disruption;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_disruption.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
 
-  V3Status status;
-  V3DisruptionResponse();
+import 'package:ptv_api_client/serializers.dart';
 
-  @override
-  String toString() {
-    return 'V3DisruptionResponse[disruption=$disruption, status=$status, ]';
+part 'v3_disruption_response.g.dart';
+
+abstract class V3DisruptionResponse
+    implements Built<V3DisruptionResponse, V3DisruptionResponseBuilder> {
+  @BuiltValueField(wireName: 'disruption')
+  V3Disruption get disruption;
+
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3DisruptionResponse._();
+
+  factory V3DisruptionResponse([updates(V3DisruptionResponseBuilder b)]) =
+      _$V3DisruptionResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DisruptionResponse.serializer, this);
   }
 
-  V3DisruptionResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['disruption'] == null) {
-      disruption = null;
-    } else {
-      disruption = V3Disruption.fromJson(json['disruption']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3DisruptionResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DisruptionResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (disruption != null) json['disruption'] = disruption;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3DisruptionResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DisruptionResponse>()
-        : json.map((value) => V3DisruptionResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DisruptionResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3DisruptionResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DisruptionResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DisruptionResponse> get serializer =>
+      _$v3DisruptionResponseSerializer;
 }

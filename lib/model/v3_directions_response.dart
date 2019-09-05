@@ -1,51 +1,39 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DirectionsResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_direction_with_description.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_directions_response.g.dart';
+
+abstract class V3DirectionsResponse
+    implements Built<V3DirectionsResponse, V3DirectionsResponseBuilder> {
   /* Directions of travel of route */
-  List<V3DirectionWithDescription> directions = [];
 
-  V3Status status;
-  V3DirectionsResponse();
+  @BuiltValueField(wireName: 'directions')
+  BuiltList<V3DirectionWithDescription> get directions;
 
-  @override
-  String toString() {
-    return 'V3DirectionsResponse[directions=$directions, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3DirectionsResponse._();
+
+  factory V3DirectionsResponse([updates(V3DirectionsResponseBuilder b)]) =
+      _$V3DirectionsResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DirectionsResponse.serializer, this);
   }
 
-  V3DirectionsResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['directions'] == null) {
-      directions = null;
-    } else {
-      directions = V3DirectionWithDescription.listFromJson(json['directions']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3DirectionsResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DirectionsResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (directions != null) json['directions'] = directions;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3DirectionsResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DirectionsResponse>()
-        : json.map((value) => V3DirectionsResponse.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DirectionsResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3DirectionsResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DirectionsResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DirectionsResponse> get serializer =>
+      _$v3DirectionsResponseSerializer;
 }

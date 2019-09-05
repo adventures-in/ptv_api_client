@@ -1,50 +1,38 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DisruptionStop {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_disruption_stop.g.dart';
+
+abstract class V3DisruptionStop
+    implements Built<V3DisruptionStop, V3DisruptionStopBuilder> {
   /* Stop identifier */
-  int stopId;
+
+  @BuiltValueField(wireName: 'stop_id')
+  int get stopId;
   /* Name of stop */
-  String stopName;
-  V3DisruptionStop();
 
-  @override
-  String toString() {
-    return 'V3DisruptionStop[stopId=$stopId, stopName=$stopName, ]';
+  @BuiltValueField(wireName: 'stop_name')
+  String get stopName;
+
+  V3DisruptionStop._();
+
+  factory V3DisruptionStop([updates(V3DisruptionStopBuilder b)]) =
+      _$V3DisruptionStop;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DisruptionStop.serializer, this);
   }
 
-  V3DisruptionStop.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['stop_id'] == null) {
-      stopId = null;
-    } else {
-      stopId = json['stop_id'];
-    }
-    if (json['stop_name'] == null) {
-      stopName = null;
-    } else {
-      stopName = json['stop_name'];
-    }
+  static V3DisruptionStop fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DisruptionStop.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (stopId != null) json['stop_id'] = stopId;
-    if (stopName != null) json['stop_name'] = stopName;
-    return json;
-  }
-
-  static List<V3DisruptionStop> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DisruptionStop>()
-        : json.map((value) => V3DisruptionStop.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DisruptionStop> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3DisruptionStop>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DisruptionStop.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DisruptionStop> get serializer =>
+      _$v3DisruptionStopSerializer;
 }

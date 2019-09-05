@@ -1,168 +1,87 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3Outlet {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_outlet.g.dart';
+
+abstract class V3Outlet implements Built<V3Outlet, V3OutletBuilder> {
   /* The SLID / SPID */
-  String outletSlidSpid;
+
+  @BuiltValueField(wireName: 'outlet_slid_spid')
+  String get outletSlidSpid;
   /* The location name of the outlet */
-  String outletName;
+
+  @BuiltValueField(wireName: 'outlet_name')
+  String get outletName;
   /* The business name of the outlet */
-  String outletBusiness;
+
+  @BuiltValueField(wireName: 'outlet_business')
+  String get outletBusiness;
   /* Geographic coordinate of latitude at outlet */
-  double outletLatitude;
+
+  @BuiltValueField(wireName: 'outlet_latitude')
+  double get outletLatitude;
   /* Geographic coordinate of longitude at outlet */
-  double outletLongitude;
+
+  @BuiltValueField(wireName: 'outlet_longitude')
+  double get outletLongitude;
   /* The city/municipality the outlet is in */
-  String outletSuburb;
+
+  @BuiltValueField(wireName: 'outlet_suburb')
+  String get outletSuburb;
   /* The postcode for the outlet */
-  int outletPostcode;
+
+  @BuiltValueField(wireName: 'outlet_postcode')
+  int get outletPostcode;
   /* The business hours on Monday */
-  String outletBusinessHourMon;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_mon')
+  String get outletBusinessHourMon;
   /* The business hours on Tuesday */
-  String outletBusinessHourTue;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_tue')
+  String get outletBusinessHourTue;
   /* The business hours on Wednesday */
-  String outletBusinessHourWed;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_wed')
+  String get outletBusinessHourWed;
   /* The business hours on Thursday */
-  String outletBusinessHourThur;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_thur')
+  String get outletBusinessHourThur;
   /* The business hours on Friday */
-  String outletBusinessHourFri;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_fri')
+  String get outletBusinessHourFri;
   /* The business hours on Saturday */
-  String outletBusinessHourSat;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_sat')
+  String get outletBusinessHourSat;
   /* The business hours on Sunday */
-  String outletBusinessHourSun;
+
+  @BuiltValueField(wireName: 'outlet_business_hour_sun')
+  String get outletBusinessHourSun;
   /* Any additional notes for the outlet such as 'Buy pre-loaded myki cards only'. May be null/empty. */
-  String outletNotes;
-  V3Outlet();
 
-  @override
-  String toString() {
-    return 'V3Outlet[outletSlidSpid=$outletSlidSpid, outletName=$outletName, outletBusiness=$outletBusiness, outletLatitude=$outletLatitude, outletLongitude=$outletLongitude, outletSuburb=$outletSuburb, outletPostcode=$outletPostcode, outletBusinessHourMon=$outletBusinessHourMon, outletBusinessHourTue=$outletBusinessHourTue, outletBusinessHourWed=$outletBusinessHourWed, outletBusinessHourThur=$outletBusinessHourThur, outletBusinessHourFri=$outletBusinessHourFri, outletBusinessHourSat=$outletBusinessHourSat, outletBusinessHourSun=$outletBusinessHourSun, outletNotes=$outletNotes, ]';
+  @BuiltValueField(wireName: 'outlet_notes')
+  String get outletNotes;
+
+  V3Outlet._();
+
+  factory V3Outlet([updates(V3OutletBuilder b)]) = _$V3Outlet;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3Outlet.serializer, this);
   }
 
-  V3Outlet.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['outlet_slid_spid'] == null) {
-      outletSlidSpid = null;
-    } else {
-      outletSlidSpid = json['outlet_slid_spid'];
-    }
-    if (json['outlet_name'] == null) {
-      outletName = null;
-    } else {
-      outletName = json['outlet_name'];
-    }
-    if (json['outlet_business'] == null) {
-      outletBusiness = null;
-    } else {
-      outletBusiness = json['outlet_business'];
-    }
-    if (json['outlet_latitude'] == null) {
-      outletLatitude = null;
-    } else {
-      outletLatitude = json['outlet_latitude'];
-    }
-    if (json['outlet_longitude'] == null) {
-      outletLongitude = null;
-    } else {
-      outletLongitude = json['outlet_longitude'];
-    }
-    if (json['outlet_suburb'] == null) {
-      outletSuburb = null;
-    } else {
-      outletSuburb = json['outlet_suburb'];
-    }
-    if (json['outlet_postcode'] == null) {
-      outletPostcode = null;
-    } else {
-      outletPostcode = json['outlet_postcode'];
-    }
-    if (json['outlet_business_hour_mon'] == null) {
-      outletBusinessHourMon = null;
-    } else {
-      outletBusinessHourMon = json['outlet_business_hour_mon'];
-    }
-    if (json['outlet_business_hour_tue'] == null) {
-      outletBusinessHourTue = null;
-    } else {
-      outletBusinessHourTue = json['outlet_business_hour_tue'];
-    }
-    if (json['outlet_business_hour_wed'] == null) {
-      outletBusinessHourWed = null;
-    } else {
-      outletBusinessHourWed = json['outlet_business_hour_wed'];
-    }
-    if (json['outlet_business_hour_thur'] == null) {
-      outletBusinessHourThur = null;
-    } else {
-      outletBusinessHourThur = json['outlet_business_hour_thur'];
-    }
-    if (json['outlet_business_hour_fri'] == null) {
-      outletBusinessHourFri = null;
-    } else {
-      outletBusinessHourFri = json['outlet_business_hour_fri'];
-    }
-    if (json['outlet_business_hour_sat'] == null) {
-      outletBusinessHourSat = null;
-    } else {
-      outletBusinessHourSat = json['outlet_business_hour_sat'];
-    }
-    if (json['outlet_business_hour_sun'] == null) {
-      outletBusinessHourSun = null;
-    } else {
-      outletBusinessHourSun = json['outlet_business_hour_sun'];
-    }
-    if (json['outlet_notes'] == null) {
-      outletNotes = null;
-    } else {
-      outletNotes = json['outlet_notes'];
-    }
+  static V3Outlet fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3Outlet.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (outletSlidSpid != null) json['outlet_slid_spid'] = outletSlidSpid;
-    if (outletName != null) json['outlet_name'] = outletName;
-    if (outletBusiness != null) json['outlet_business'] = outletBusiness;
-    if (outletLatitude != null) json['outlet_latitude'] = outletLatitude;
-    if (outletLongitude != null) json['outlet_longitude'] = outletLongitude;
-    if (outletSuburb != null) json['outlet_suburb'] = outletSuburb;
-    if (outletPostcode != null) json['outlet_postcode'] = outletPostcode;
-    if (outletBusinessHourMon != null) {
-      json['outlet_business_hour_mon'] = outletBusinessHourMon;
-    }
-    if (outletBusinessHourTue != null) {
-      json['outlet_business_hour_tue'] = outletBusinessHourTue;
-    }
-    if (outletBusinessHourWed != null) {
-      json['outlet_business_hour_wed'] = outletBusinessHourWed;
-    }
-    if (outletBusinessHourThur != null) {
-      json['outlet_business_hour_thur'] = outletBusinessHourThur;
-    }
-    if (outletBusinessHourFri != null) {
-      json['outlet_business_hour_fri'] = outletBusinessHourFri;
-    }
-    if (outletBusinessHourSat != null) {
-      json['outlet_business_hour_sat'] = outletBusinessHourSat;
-    }
-    if (outletBusinessHourSun != null) {
-      json['outlet_business_hour_sun'] = outletBusinessHourSun;
-    }
-    if (outletNotes != null) json['outlet_notes'] = outletNotes;
-    return json;
-  }
-
-  static List<V3Outlet> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3Outlet>()
-        : json.map((value) => V3Outlet.fromJson(value)).toList();
-  }
-
-  static Map<String, V3Outlet> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3Outlet>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = V3Outlet.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3Outlet> get serializer => _$v3OutletSerializer;
 }

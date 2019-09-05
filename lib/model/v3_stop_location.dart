@@ -1,41 +1,32 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3StopLocation {
-  V3StopGps gps;
-  V3StopLocation();
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_stop_gps.dart';
 
-  @override
-  String toString() {
-    return 'V3StopLocation[gps=$gps, ]';
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_stop_location.g.dart';
+
+abstract class V3StopLocation
+    implements Built<V3StopLocation, V3StopLocationBuilder> {
+  @BuiltValueField(wireName: 'gps')
+  V3StopGps get gps;
+
+  V3StopLocation._();
+
+  factory V3StopLocation([updates(V3StopLocationBuilder b)]) = _$V3StopLocation;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3StopLocation.serializer, this);
   }
 
-  V3StopLocation.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['gps'] == null) {
-      gps = null;
-    } else {
-      gps = V3StopGps.fromJson(json['gps']);
-    }
+  static V3StopLocation fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3StopLocation.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (gps != null) json['gps'] = gps;
-    return json;
-  }
-
-  static List<V3StopLocation> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3StopLocation>()
-        : json.map((value) => V3StopLocation.fromJson(value)).toList();
-  }
-
-  static Map<String, V3StopLocation> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3StopLocation>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3StopLocation.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3StopLocation> get serializer =>
+      _$v3StopLocationSerializer;
 }

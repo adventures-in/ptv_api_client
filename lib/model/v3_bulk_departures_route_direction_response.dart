@@ -1,63 +1,47 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3BulkDeparturesRouteDirectionResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_bulk_departures_route_direction_response.g.dart';
+
+abstract class V3BulkDeparturesRouteDirectionResponse
+    implements
+        Built<V3BulkDeparturesRouteDirectionResponse,
+            V3BulkDeparturesRouteDirectionResponseBuilder> {
   /* Route identifier */
-  String routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  String get routeId;
   /* Direction of travel identifier */
-  int directionId;
+
+  @BuiltValueField(wireName: 'direction_id')
+  int get directionId;
   /* Name of direction of travel */
-  String directionName;
-  V3BulkDeparturesRouteDirectionResponse();
 
-  @override
-  String toString() {
-    return 'V3BulkDeparturesRouteDirectionResponse[routeId=$routeId, directionId=$directionId, directionName=$directionName, ]';
+  @BuiltValueField(wireName: 'direction_name')
+  String get directionName;
+
+  V3BulkDeparturesRouteDirectionResponse._();
+
+  factory V3BulkDeparturesRouteDirectionResponse(
+          [updates(V3BulkDeparturesRouteDirectionResponseBuilder b)]) =
+      _$V3BulkDeparturesRouteDirectionResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3BulkDeparturesRouteDirectionResponse.serializer, this);
   }
 
-  V3BulkDeparturesRouteDirectionResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['direction_id'] == null) {
-      directionId = null;
-    } else {
-      directionId = json['direction_id'];
-    }
-    if (json['direction_name'] == null) {
-      directionName = null;
-    } else {
-      directionName = json['direction_name'];
-    }
+  static V3BulkDeparturesRouteDirectionResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3BulkDeparturesRouteDirectionResponse.serializer,
+        json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeId != null) json['route_id'] = routeId;
-    if (directionId != null) json['direction_id'] = directionId;
-    if (directionName != null) json['direction_name'] = directionName;
-    return json;
-  }
-
-  static List<V3BulkDeparturesRouteDirectionResponse> listFromJson(
-      List<dynamic> json) {
-    return json == null
-        ? List<V3BulkDeparturesRouteDirectionResponse>()
-        : json
-            .map((value) =>
-                V3BulkDeparturesRouteDirectionResponse.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3BulkDeparturesRouteDirectionResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3BulkDeparturesRouteDirectionResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3BulkDeparturesRouteDirectionResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3BulkDeparturesRouteDirectionResponse> get serializer =>
+      _$v3BulkDeparturesRouteDirectionResponseSerializer;
 }

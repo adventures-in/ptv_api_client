@@ -1,5 +1,3 @@
-part of ptv_api_client.api;
-
 class ApiException implements Exception {
   int code = 0;
   String message;

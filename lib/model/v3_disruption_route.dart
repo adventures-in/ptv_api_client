@@ -1,82 +1,54 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3DisruptionRoute {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_disruption_direction.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_disruption_route.g.dart';
+
+abstract class V3DisruptionRoute
+    implements Built<V3DisruptionRoute, V3DisruptionRouteBuilder> {
   /* Transport mode identifier */
-  int routeType;
+
+  @BuiltValueField(wireName: 'route_type')
+  int get routeType;
   /* Route identifier */
-  int routeId;
+
+  @BuiltValueField(wireName: 'route_id')
+  int get routeId;
   /* Name of route */
-  String routeName;
+
+  @BuiltValueField(wireName: 'route_name')
+  String get routeName;
   /* Route number presented to public (i.e. not route_id) */
-  String routeNumber;
+
+  @BuiltValueField(wireName: 'route_number')
+  String get routeNumber;
   /* GTFS Identifer of the route */
-  String routeGtfsId;
 
-  V3DisruptionDirection direction;
-  V3DisruptionRoute();
+  @BuiltValueField(wireName: 'route_gtfs_id')
+  String get routeGtfsId;
 
-  @override
-  String toString() {
-    return 'V3DisruptionRoute[routeType=$routeType, routeId=$routeId, routeName=$routeName, routeNumber=$routeNumber, routeGtfsId=$routeGtfsId, direction=$direction, ]';
+  @BuiltValueField(wireName: 'direction')
+  V3DisruptionDirection get direction;
+
+  V3DisruptionRoute._();
+
+  factory V3DisruptionRoute([updates(V3DisruptionRouteBuilder b)]) =
+      _$V3DisruptionRoute;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(V3DisruptionRoute.serializer, this);
   }
 
-  V3DisruptionRoute.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['route_type'] == null) {
-      routeType = null;
-    } else {
-      routeType = json['route_type'];
-    }
-    if (json['route_id'] == null) {
-      routeId = null;
-    } else {
-      routeId = json['route_id'];
-    }
-    if (json['route_name'] == null) {
-      routeName = null;
-    } else {
-      routeName = json['route_name'];
-    }
-    if (json['route_number'] == null) {
-      routeNumber = null;
-    } else {
-      routeNumber = json['route_number'];
-    }
-    if (json['route_gtfs_id'] == null) {
-      routeGtfsId = null;
-    } else {
-      routeGtfsId = json['route_gtfs_id'];
-    }
-    if (json['direction'] == null) {
-      direction = null;
-    } else {
-      direction = V3DisruptionDirection.fromJson(json['direction']);
-    }
+  static V3DisruptionRoute fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3DisruptionRoute.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (routeType != null) json['route_type'] = routeType;
-    if (routeId != null) json['route_id'] = routeId;
-    if (routeName != null) json['route_name'] = routeName;
-    if (routeNumber != null) json['route_number'] = routeNumber;
-    if (routeGtfsId != null) json['route_gtfs_id'] = routeGtfsId;
-    if (direction != null) json['direction'] = direction;
-    return json;
-  }
-
-  static List<V3DisruptionRoute> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3DisruptionRoute>()
-        : json.map((value) => V3DisruptionRoute.fromJson(value)).toList();
-  }
-
-  static Map<String, V3DisruptionRoute> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, V3DisruptionRoute>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3DisruptionRoute.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3DisruptionRoute> get serializer =>
+      _$v3DisruptionRouteSerializer;
 }

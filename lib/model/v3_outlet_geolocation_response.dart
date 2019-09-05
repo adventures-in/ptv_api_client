@@ -1,53 +1,42 @@
-part of ptv_api_client.api;
+import 'dart:convert';
 
-class V3OutletGeolocationResponse {
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:ptv_api_client/model/v3_outlet_geolocation.dart';
+import 'package:ptv_api_client/model/v3_status.dart';
+
+import 'package:ptv_api_client/serializers.dart';
+
+part 'v3_outlet_geolocation_response.g.dart';
+
+abstract class V3OutletGeolocationResponse
+    implements
+        Built<V3OutletGeolocationResponse, V3OutletGeolocationResponseBuilder> {
   /* myki ticket outlets */
-  List<V3OutletGeolocation> outlets = [];
 
-  V3Status status;
-  V3OutletGeolocationResponse();
+  @BuiltValueField(wireName: 'outlets')
+  BuiltList<V3OutletGeolocation> get outlets;
 
-  @override
-  String toString() {
-    return 'V3OutletGeolocationResponse[outlets=$outlets, status=$status, ]';
+  @BuiltValueField(wireName: 'status')
+  V3Status get status;
+
+  V3OutletGeolocationResponse._();
+
+  factory V3OutletGeolocationResponse(
+          [updates(V3OutletGeolocationResponseBuilder b)]) =
+      _$V3OutletGeolocationResponse;
+
+  Map<String, Object> toJson() {
+    return serializers.serializeWith(
+        V3OutletGeolocationResponse.serializer, this);
   }
 
-  V3OutletGeolocationResponse.fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-    if (json['outlets'] == null) {
-      outlets = null;
-    } else {
-      outlets = V3OutletGeolocation.listFromJson(json['outlets']);
-    }
-    if (json['status'] == null) {
-      status = null;
-    } else {
-      status = V3Status.fromJson(json['status']);
-    }
+  static V3OutletGeolocationResponse fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        V3OutletGeolocationResponse.serializer, json.decode(jsonString));
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (outlets != null) json['outlets'] = outlets;
-    if (status != null) json['status'] = status;
-    return json;
-  }
-
-  static List<V3OutletGeolocationResponse> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<V3OutletGeolocationResponse>()
-        : json
-            .map((value) => V3OutletGeolocationResponse.fromJson(value))
-            .toList();
-  }
-
-  static Map<String, V3OutletGeolocationResponse> mapFromJson(
-      Map<String, dynamic> json) {
-    var map = Map<String, V3OutletGeolocationResponse>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) =>
-          map[key] = V3OutletGeolocationResponse.fromJson(value));
-    }
-    return map;
-  }
+  static Serializer<V3OutletGeolocationResponse> get serializer =>
+      _$v3OutletGeolocationResponseSerializer;
 }

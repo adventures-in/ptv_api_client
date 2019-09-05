@@ -1,4 +1,9 @@
-part of ptv_api_client.api;
+import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
+import 'package:ptv_api_client/api.dart';
+import 'package:ptv_api_client/api_client.dart';
+import 'package:ptv_api_client/api_exception.dart';
+import 'package:ptv_api_client/api_helper.dart';
 
 class DirectionsApi {
   final ApiClient apiClient;
@@ -43,11 +48,9 @@ class DirectionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DirectionsResponse')
-          as V3DirectionsResponse;
+      return V3DirectionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -95,11 +98,9 @@ class DirectionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DirectionsResponse')
-          as V3DirectionsResponse;
+      return V3DirectionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -142,11 +143,9 @@ class DirectionsApi {
         headerParams, formParams, contentType, authNames);
 
     if (response.statusCode >= 400) {
-      throw ApiException(response.statusCode, _decodeBodyBytes(response));
+      throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return apiClient.deserialize(
-              _decodeBodyBytes(response), 'V3DirectionsResponse')
-          as V3DirectionsResponse;
+      return V3DirectionsResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
