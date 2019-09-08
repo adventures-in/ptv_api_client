@@ -20,10 +20,12 @@ abstract class V3StopDetails
   BuiltList<int> get disruptionIds;
   /* Type of metropolitan train station (i.e. \"Premium\", \"Host\" or \"Unstaffed\" station); returns null for V/Line train */
 
+  @nullable
   @BuiltValueField(wireName: 'station_type')
   String get stationType;
   /* The definition applicable to the station_type; returns null for V/Line train */
 
+  @nullable
   @BuiltValueField(wireName: 'station_description')
   String get stationDescription;
   /* Transport mode identifier */
@@ -31,15 +33,19 @@ abstract class V3StopDetails
   @BuiltValueField(wireName: 'route_type')
   int get routeType;
 
+  @nullable
   @BuiltValueField(wireName: 'stop_location')
   V3StopLocation get stopLocation;
 
+  @nullable
   @BuiltValueField(wireName: 'stop_amenities')
   V3StopAmenityDetails get stopAmenities;
 
+  @nullable
   @BuiltValueField(wireName: 'stop_accessibility')
   V3StopAccessibility get stopAccessibility;
 
+  @nullable
   @BuiltValueField(wireName: 'stop_staffing')
   V3StopStaffing get stopStaffing;
   /* Stop identifier */

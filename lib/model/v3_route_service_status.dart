@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -13,8 +12,10 @@ abstract class V3RouteServiceStatus
   @BuiltValueField(wireName: 'description')
   String get description;
 
+  // TODO(nickm): when we figure out a fix for the invalid date format
+  // we can change this back to a DateTime
   @BuiltValueField(wireName: 'timestamp')
-  DateTime get timestamp;
+  String get timestamp;
 
   V3RouteServiceStatus._();
 

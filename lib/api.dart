@@ -40,6 +40,7 @@ export 'model/v3_route_service_status.dart';
 export 'model/v3_route_type.dart';
 export 'model/v3_route_types_response.dart';
 export 'model/v3_route_with_status.dart';
+export 'model/v3_routes_response.dart';
 export 'model/v3_run.dart';
 export 'model/v3_run_response.dart';
 export 'model/v3_runs_response.dart';

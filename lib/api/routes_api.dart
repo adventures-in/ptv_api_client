@@ -1,9 +1,9 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:http/http.dart';
 import 'package:ptv_api_client/api.dart';
 import 'package:ptv_api_client/api_client.dart';
 import 'package:ptv_api_client/api_exception.dart';
 import 'package:ptv_api_client/api_helper.dart';
+import 'package:ptv_api_client/model/v3_routes_response.dart';
 
 class RoutesApi {
   final ApiClient apiClient;
@@ -13,7 +13,7 @@ class RoutesApi {
   /// View route names and numbers for all routes
   ///
   ///
-  Future<V3RouteResponse> routesOneOrMoreRoutes(
+  Future<V3RoutesResponse> routesOneOrMoreRoutes(
       {List<int> routeTypes, String routeName}) async {
     Object postBody;
 
@@ -53,7 +53,7 @@ class RoutesApi {
     if (response.statusCode >= 400) {
       throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return V3RouteResponse.fromJson(decodeBodyBytes(response));
+      return V3RoutesResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }
@@ -62,7 +62,7 @@ class RoutesApi {
   /// View route name and number for specific route ID
   ///
   ///
-  Future<V3RouteResponse> routesRouteFromId(int routeId) async {
+  Future<V3RoutesResponse> routesRouteFromId(int routeId) async {
     Object postBody;
 
     // verify required params are set
@@ -98,7 +98,7 @@ class RoutesApi {
     if (response.statusCode >= 400) {
       throw ApiException(response.statusCode, decodeBodyBytes(response));
     } else if (response.body != null) {
-      return V3RouteResponse.fromJson(decodeBodyBytes(response));
+      return V3RoutesResponse.fromJson(decodeBodyBytes(response));
     } else {
       return null;
     }

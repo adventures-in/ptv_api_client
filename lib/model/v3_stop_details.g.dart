@@ -23,34 +23,51 @@ class _$V3StopDetailsSerializer implements StructuredSerializer<V3StopDetails> {
       serializers.serialize(object.disruptionIds,
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
-      'station_type',
-      serializers.serialize(object.stationType,
-          specifiedType: const FullType(String)),
-      'station_description',
-      serializers.serialize(object.stationDescription,
-          specifiedType: const FullType(String)),
       'route_type',
       serializers.serialize(object.routeType,
           specifiedType: const FullType(int)),
-      'stop_location',
-      serializers.serialize(object.stopLocation,
-          specifiedType: const FullType(V3StopLocation)),
-      'stop_amenities',
-      serializers.serialize(object.stopAmenities,
-          specifiedType: const FullType(V3StopAmenityDetails)),
-      'stop_accessibility',
-      serializers.serialize(object.stopAccessibility,
-          specifiedType: const FullType(V3StopAccessibility)),
-      'stop_staffing',
-      serializers.serialize(object.stopStaffing,
-          specifiedType: const FullType(V3StopStaffing)),
       'stop_id',
       serializers.serialize(object.stopId, specifiedType: const FullType(int)),
       'stop_name',
       serializers.serialize(object.stopName,
           specifiedType: const FullType(String)),
     ];
-
+    if (object.stationType != null) {
+      result
+        ..add('station_type')
+        ..add(serializers.serialize(object.stationType,
+            specifiedType: const FullType(String)));
+    }
+    if (object.stationDescription != null) {
+      result
+        ..add('station_description')
+        ..add(serializers.serialize(object.stationDescription,
+            specifiedType: const FullType(String)));
+    }
+    if (object.stopLocation != null) {
+      result
+        ..add('stop_location')
+        ..add(serializers.serialize(object.stopLocation,
+            specifiedType: const FullType(V3StopLocation)));
+    }
+    if (object.stopAmenities != null) {
+      result
+        ..add('stop_amenities')
+        ..add(serializers.serialize(object.stopAmenities,
+            specifiedType: const FullType(V3StopAmenityDetails)));
+    }
+    if (object.stopAccessibility != null) {
+      result
+        ..add('stop_accessibility')
+        ..add(serializers.serialize(object.stopAccessibility,
+            specifiedType: const FullType(V3StopAccessibility)));
+    }
+    if (object.stopStaffing != null) {
+      result
+        ..add('stop_staffing')
+        ..add(serializers.serialize(object.stopStaffing,
+            specifiedType: const FullType(V3StopStaffing)));
+    }
     return result;
   }
 
@@ -157,26 +174,8 @@ class _$V3StopDetails extends V3StopDetails {
     if (disruptionIds == null) {
       throw new BuiltValueNullFieldError('V3StopDetails', 'disruptionIds');
     }
-    if (stationType == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stationType');
-    }
-    if (stationDescription == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stationDescription');
-    }
     if (routeType == null) {
       throw new BuiltValueNullFieldError('V3StopDetails', 'routeType');
-    }
-    if (stopLocation == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stopLocation');
-    }
-    if (stopAmenities == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stopAmenities');
-    }
-    if (stopAccessibility == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stopAccessibility');
-    }
-    if (stopStaffing == null) {
-      throw new BuiltValueNullFieldError('V3StopDetails', 'stopStaffing');
     }
     if (stopId == null) {
       throw new BuiltValueNullFieldError('V3StopDetails', 'stopId');
@@ -345,10 +344,10 @@ class V3StopDetailsBuilder
               stationType: stationType,
               stationDescription: stationDescription,
               routeType: routeType,
-              stopLocation: stopLocation.build(),
-              stopAmenities: stopAmenities.build(),
-              stopAccessibility: stopAccessibility.build(),
-              stopStaffing: stopStaffing.build(),
+              stopLocation: _stopLocation?.build(),
+              stopAmenities: _stopAmenities?.build(),
+              stopAccessibility: _stopAccessibility?.build(),
+              stopStaffing: _stopStaffing?.build(),
               stopId: stopId,
               stopName: stopName);
     } catch (_) {
@@ -358,13 +357,13 @@ class V3StopDetailsBuilder
         disruptionIds.build();
 
         _$failedField = 'stopLocation';
-        stopLocation.build();
+        _stopLocation?.build();
         _$failedField = 'stopAmenities';
-        stopAmenities.build();
+        _stopAmenities?.build();
         _$failedField = 'stopAccessibility';
-        stopAccessibility.build();
+        _stopAccessibility?.build();
         _$failedField = 'stopStaffing';
-        stopStaffing.build();
+        _stopStaffing?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'V3StopDetails', _$failedField, e.toString());

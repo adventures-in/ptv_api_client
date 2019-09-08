@@ -31,26 +31,43 @@ class _$V3DepartureSerializer implements StructuredSerializer<V3Departure> {
       serializers.serialize(object.disruptionIds,
           specifiedType:
               const FullType(BuiltList, const [const FullType(int)])),
-      'scheduled_departure_utc',
-      serializers.serialize(object.scheduledDepartureUtc,
-          specifiedType: const FullType(DateTime)),
-      'estimated_departure_utc',
-      serializers.serialize(object.estimatedDepartureUtc,
-          specifiedType: const FullType(DateTime)),
-      'at_platform',
-      serializers.serialize(object.atPlatform,
-          specifiedType: const FullType(bool)),
-      'platform_number',
-      serializers.serialize(object.platformNumber,
-          specifiedType: const FullType(String)),
-      'flags',
-      serializers.serialize(object.flags,
-          specifiedType: const FullType(String)),
-      'departure_sequence',
-      serializers.serialize(object.departureSequence,
-          specifiedType: const FullType(int)),
     ];
-
+    if (object.scheduledDepartureUtc != null) {
+      result
+        ..add('scheduled_departure_utc')
+        ..add(serializers.serialize(object.scheduledDepartureUtc,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.estimatedDepartureUtc != null) {
+      result
+        ..add('estimated_departure_utc')
+        ..add(serializers.serialize(object.estimatedDepartureUtc,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.atPlatform != null) {
+      result
+        ..add('at_platform')
+        ..add(serializers.serialize(object.atPlatform,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.platformNumber != null) {
+      result
+        ..add('platform_number')
+        ..add(serializers.serialize(object.platformNumber,
+            specifiedType: const FullType(String)));
+    }
+    if (object.flags != null) {
+      result
+        ..add('flags')
+        ..add(serializers.serialize(object.flags,
+            specifiedType: const FullType(String)));
+    }
+    if (object.departureSequence != null) {
+      result
+        ..add('departure_sequence')
+        ..add(serializers.serialize(object.departureSequence,
+            specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -172,26 +189,6 @@ class _$V3Departure extends V3Departure {
     }
     if (disruptionIds == null) {
       throw new BuiltValueNullFieldError('V3Departure', 'disruptionIds');
-    }
-    if (scheduledDepartureUtc == null) {
-      throw new BuiltValueNullFieldError(
-          'V3Departure', 'scheduledDepartureUtc');
-    }
-    if (estimatedDepartureUtc == null) {
-      throw new BuiltValueNullFieldError(
-          'V3Departure', 'estimatedDepartureUtc');
-    }
-    if (atPlatform == null) {
-      throw new BuiltValueNullFieldError('V3Departure', 'atPlatform');
-    }
-    if (platformNumber == null) {
-      throw new BuiltValueNullFieldError('V3Departure', 'platformNumber');
-    }
-    if (flags == null) {
-      throw new BuiltValueNullFieldError('V3Departure', 'flags');
-    }
-    if (departureSequence == null) {
-      throw new BuiltValueNullFieldError('V3Departure', 'departureSequence');
     }
   }
 

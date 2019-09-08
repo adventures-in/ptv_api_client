@@ -29,7 +29,7 @@ class _$V3RouteServiceStatusSerializer
           specifiedType: const FullType(String)),
       'timestamp',
       serializers.serialize(object.timestamp,
-          specifiedType: const FullType(DateTime)),
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -53,7 +53,7 @@ class _$V3RouteServiceStatusSerializer
           break;
         case 'timestamp':
           result.timestamp = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -66,7 +66,7 @@ class _$V3RouteServiceStatus extends V3RouteServiceStatus {
   @override
   final String description;
   @override
-  final DateTime timestamp;
+  final String timestamp;
 
   factory _$V3RouteServiceStatus(
           [void Function(V3RouteServiceStatusBuilder) updates]) =>
@@ -120,9 +120,9 @@ class V3RouteServiceStatusBuilder
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
 
-  DateTime _timestamp;
-  DateTime get timestamp => _$this._timestamp;
-  set timestamp(DateTime timestamp) => _$this._timestamp = timestamp;
+  String _timestamp;
+  String get timestamp => _$this._timestamp;
+  set timestamp(String timestamp) => _$this._timestamp = timestamp;
 
   V3RouteServiceStatusBuilder();
 

@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 
@@ -40,6 +41,7 @@ import 'package:ptv_api_client/model/v3_route_service_status.dart';
 import 'package:ptv_api_client/model/v3_route_type.dart';
 import 'package:ptv_api_client/model/v3_route_types_response.dart';
 import 'package:ptv_api_client/model/v3_route_with_status.dart';
+import 'package:ptv_api_client/model/v3_routes_response.dart';
 import 'package:ptv_api_client/model/v3_run.dart';
 import 'package:ptv_api_client/model/v3_run_response.dart';
 import 'package:ptv_api_client/model/v3_runs_response.dart';
@@ -117,6 +119,7 @@ part 'serializers.g.dart';
   V3RouteType,
   V3RouteTypesResponse,
   V3RouteWithStatus,
+  V3RoutesResponse,
   V3Run,
   V3RunResponse,
   V3RunsResponse,
@@ -142,5 +145,7 @@ part 'serializers.g.dart';
   V3VehicleDescriptor,
   V3VehiclePosition,
 ])
-final Serializers serializers =
-    (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+final Serializers serializers = (_$serializers.toBuilder()
+      ..addPlugin(StandardJsonPlugin())
+      ..add(Iso8601DateTimeSerializer()))
+    .build();
