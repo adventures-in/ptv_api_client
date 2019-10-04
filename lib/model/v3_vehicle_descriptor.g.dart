@@ -23,26 +23,43 @@ class _$V3VehicleDescriptorSerializer
   Iterable<Object> serialize(
       Serializers serializers, V3VehicleDescriptor object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'operator',
-      serializers.serialize(object.operator_,
-          specifiedType: const FullType(String)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'low_floor',
-      serializers.serialize(object.lowFloor,
-          specifiedType: const FullType(bool)),
-      'air_conditioned',
-      serializers.serialize(object.airConditioned,
-          specifiedType: const FullType(bool)),
-      'description',
-      serializers.serialize(object.description,
-          specifiedType: const FullType(String)),
-      'supplier',
-      serializers.serialize(object.supplier,
-          specifiedType: const FullType(String)),
-    ];
-
+    final result = <Object>[];
+    if (object.operator_ != null) {
+      result
+        ..add('operator')
+        ..add(serializers.serialize(object.operator_,
+            specifiedType: const FullType(String)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
+    if (object.lowFloor != null) {
+      result
+        ..add('low_floor')
+        ..add(serializers.serialize(object.lowFloor,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.airConditioned != null) {
+      result
+        ..add('air_conditioned')
+        ..add(serializers.serialize(object.airConditioned,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.description != null) {
+      result
+        ..add('description')
+        ..add(serializers.serialize(object.description,
+            specifiedType: const FullType(String)));
+    }
+    if (object.supplier != null) {
+      result
+        ..add('supplier')
+        ..add(serializers.serialize(object.supplier,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -114,27 +131,7 @@ class _$V3VehicleDescriptor extends V3VehicleDescriptor {
       this.airConditioned,
       this.description,
       this.supplier})
-      : super._() {
-    if (operator_ == null) {
-      throw new BuiltValueNullFieldError('V3VehicleDescriptor', 'operator_');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('V3VehicleDescriptor', 'id');
-    }
-    if (lowFloor == null) {
-      throw new BuiltValueNullFieldError('V3VehicleDescriptor', 'lowFloor');
-    }
-    if (airConditioned == null) {
-      throw new BuiltValueNullFieldError(
-          'V3VehicleDescriptor', 'airConditioned');
-    }
-    if (description == null) {
-      throw new BuiltValueNullFieldError('V3VehicleDescriptor', 'description');
-    }
-    if (supplier == null) {
-      throw new BuiltValueNullFieldError('V3VehicleDescriptor', 'supplier');
-    }
-  }
+      : super._();
 
   @override
   V3VehicleDescriptor rebuild(

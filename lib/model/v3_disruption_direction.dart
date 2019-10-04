@@ -12,18 +12,22 @@ abstract class V3DisruptionDirection
     implements Built<V3DisruptionDirection, V3DisruptionDirectionBuilder> {
   /* Route and direction of travel combination identifier */
 
+  @nullable
   @BuiltValueField(wireName: 'route_direction_id')
   int get routeDirectionId;
   /* Direction of travel identifier */
 
+  @nullable
   @BuiltValueField(wireName: 'direction_id')
   int get directionId;
   /* Name of direction of travel */
 
+  @nullable
   @BuiltValueField(wireName: 'direction_name')
   String get directionName;
   /* Time of service to which disruption applies, in 24 hour clock format (HH:MM:SS) AEDT/AEST; returns null if disruption applies to multiple (or no) services */
 
+  @nullable
   @BuiltValueField(wireName: 'service_time')
   String get serviceTime;
 

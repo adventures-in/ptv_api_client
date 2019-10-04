@@ -12,18 +12,22 @@ abstract class V3VehiclePosition
     implements Built<V3VehiclePosition, V3VehiclePositionBuilder> {
   /* Geographic coordinate of latitude of the vehicle when known. May be null.              Only available for some bus runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'latitude')
   double get latitude;
   /* Geographic coordinate of longitude of the vehicle when known.               Only available for some bus runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'longitude')
   double get longitude;
   /* Compass bearing of the vehicle when known, clockwise from True North, i.e., 0 is North and 90 is East. May be null.              Only available for some bus runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'bearing')
   double get bearing;
   /* Supplier of vehicle position data. */
 
+  @nullable
   @BuiltValueField(wireName: 'supplier')
   String get supplier;
 

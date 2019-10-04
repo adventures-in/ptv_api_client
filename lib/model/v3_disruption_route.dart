@@ -32,6 +32,7 @@ abstract class V3DisruptionRoute
   @BuiltValueField(wireName: 'route_gtfs_id')
   String get routeGtfsId;
 
+  @nullable
   @BuiltValueField(wireName: 'direction')
   V3DisruptionDirection get direction;
 

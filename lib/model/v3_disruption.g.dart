@@ -36,18 +36,6 @@ class _$V3DisruptionSerializer implements StructuredSerializer<V3Disruption> {
       'disruption_type',
       serializers.serialize(object.disruptionType,
           specifiedType: const FullType(String)),
-      'published_on',
-      serializers.serialize(object.publishedOn,
-          specifiedType: const FullType(DateTime)),
-      'last_updated',
-      serializers.serialize(object.lastUpdated,
-          specifiedType: const FullType(DateTime)),
-      'from_date',
-      serializers.serialize(object.fromDate,
-          specifiedType: const FullType(DateTime)),
-      'to_date',
-      serializers.serialize(object.toDate,
-          specifiedType: const FullType(DateTime)),
       'routes',
       serializers.serialize(object.routes,
           specifiedType: const FullType(
@@ -66,7 +54,30 @@ class _$V3DisruptionSerializer implements StructuredSerializer<V3Disruption> {
       serializers.serialize(object.displayStatus,
           specifiedType: const FullType(bool)),
     ];
-
+    if (object.publishedOn != null) {
+      result
+        ..add('published_on')
+        ..add(serializers.serialize(object.publishedOn,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.lastUpdated != null) {
+      result
+        ..add('last_updated')
+        ..add(serializers.serialize(object.lastUpdated,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.fromDate != null) {
+      result
+        ..add('from_date')
+        ..add(serializers.serialize(object.fromDate,
+            specifiedType: const FullType(DateTime)));
+    }
+    if (object.toDate != null) {
+      result
+        ..add('to_date')
+        ..add(serializers.serialize(object.toDate,
+            specifiedType: const FullType(DateTime)));
+    }
     return result;
   }
 
@@ -221,18 +232,6 @@ class _$V3Disruption extends V3Disruption {
     }
     if (disruptionType == null) {
       throw new BuiltValueNullFieldError('V3Disruption', 'disruptionType');
-    }
-    if (publishedOn == null) {
-      throw new BuiltValueNullFieldError('V3Disruption', 'publishedOn');
-    }
-    if (lastUpdated == null) {
-      throw new BuiltValueNullFieldError('V3Disruption', 'lastUpdated');
-    }
-    if (fromDate == null) {
-      throw new BuiltValueNullFieldError('V3Disruption', 'fromDate');
-    }
-    if (toDate == null) {
-      throw new BuiltValueNullFieldError('V3Disruption', 'toDate');
     }
     if (routes == null) {
       throw new BuiltValueNullFieldError('V3Disruption', 'routes');

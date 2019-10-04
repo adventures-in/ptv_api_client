@@ -23,21 +23,31 @@ class _$V3DisruptionDirectionSerializer
   Iterable<Object> serialize(
       Serializers serializers, V3DisruptionDirection object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'route_direction_id',
-      serializers.serialize(object.routeDirectionId,
-          specifiedType: const FullType(int)),
-      'direction_id',
-      serializers.serialize(object.directionId,
-          specifiedType: const FullType(int)),
-      'direction_name',
-      serializers.serialize(object.directionName,
-          specifiedType: const FullType(String)),
-      'service_time',
-      serializers.serialize(object.serviceTime,
-          specifiedType: const FullType(String)),
-    ];
-
+    final result = <Object>[];
+    if (object.routeDirectionId != null) {
+      result
+        ..add('route_direction_id')
+        ..add(serializers.serialize(object.routeDirectionId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.directionId != null) {
+      result
+        ..add('direction_id')
+        ..add(serializers.serialize(object.directionId,
+            specifiedType: const FullType(int)));
+    }
+    if (object.directionName != null) {
+      result
+        ..add('direction_name')
+        ..add(serializers.serialize(object.directionName,
+            specifiedType: const FullType(String)));
+    }
+    if (object.serviceTime != null) {
+      result
+        ..add('service_time')
+        ..add(serializers.serialize(object.serviceTime,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -95,24 +105,7 @@ class _$V3DisruptionDirection extends V3DisruptionDirection {
       this.directionId,
       this.directionName,
       this.serviceTime})
-      : super._() {
-    if (routeDirectionId == null) {
-      throw new BuiltValueNullFieldError(
-          'V3DisruptionDirection', 'routeDirectionId');
-    }
-    if (directionId == null) {
-      throw new BuiltValueNullFieldError(
-          'V3DisruptionDirection', 'directionId');
-    }
-    if (directionName == null) {
-      throw new BuiltValueNullFieldError(
-          'V3DisruptionDirection', 'directionName');
-    }
-    if (serviceTime == null) {
-      throw new BuiltValueNullFieldError(
-          'V3DisruptionDirection', 'serviceTime');
-    }
-  }
+      : super._();
 
   @override
   V3DisruptionDirection rebuild(

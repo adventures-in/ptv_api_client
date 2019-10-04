@@ -19,21 +19,31 @@ class _$V3VehiclePositionSerializer
   @override
   Iterable<Object> serialize(Serializers serializers, V3VehiclePosition object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'latitude',
-      serializers.serialize(object.latitude,
-          specifiedType: const FullType(double)),
-      'longitude',
-      serializers.serialize(object.longitude,
-          specifiedType: const FullType(double)),
-      'bearing',
-      serializers.serialize(object.bearing,
-          specifiedType: const FullType(double)),
-      'supplier',
-      serializers.serialize(object.supplier,
-          specifiedType: const FullType(String)),
-    ];
-
+    final result = <Object>[];
+    if (object.latitude != null) {
+      result
+        ..add('latitude')
+        ..add(serializers.serialize(object.latitude,
+            specifiedType: const FullType(double)));
+    }
+    if (object.longitude != null) {
+      result
+        ..add('longitude')
+        ..add(serializers.serialize(object.longitude,
+            specifiedType: const FullType(double)));
+    }
+    if (object.bearing != null) {
+      result
+        ..add('bearing')
+        ..add(serializers.serialize(object.bearing,
+            specifiedType: const FullType(double)));
+    }
+    if (object.supplier != null) {
+      result
+        ..add('supplier')
+        ..add(serializers.serialize(object.supplier,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -88,20 +98,7 @@ class _$V3VehiclePosition extends V3VehiclePosition {
 
   _$V3VehiclePosition._(
       {this.latitude, this.longitude, this.bearing, this.supplier})
-      : super._() {
-    if (latitude == null) {
-      throw new BuiltValueNullFieldError('V3VehiclePosition', 'latitude');
-    }
-    if (longitude == null) {
-      throw new BuiltValueNullFieldError('V3VehiclePosition', 'longitude');
-    }
-    if (bearing == null) {
-      throw new BuiltValueNullFieldError('V3VehiclePosition', 'bearing');
-    }
-    if (supplier == null) {
-      throw new BuiltValueNullFieldError('V3VehiclePosition', 'supplier');
-    }
-  }
+      : super._();
 
   @override
   V3VehiclePosition rebuild(void Function(V3VehiclePositionBuilder) updates) =>

@@ -38,18 +38,22 @@ abstract class V3Disruption
   String get disruptionType;
   /* Date and time disruption information is published on PTV website, in ISO 8601 UTC format */
 
+  @nullable
   @BuiltValueField(wireName: 'published_on')
   DateTime get publishedOn;
   /* Date and time disruption information was last updated by PTV, in ISO 8601 UTC format */
 
+  @nullable
   @BuiltValueField(wireName: 'last_updated')
   DateTime get lastUpdated;
   /* Date and time at which disruption begins, in ISO 8601 UTC format */
 
+  @nullable
   @BuiltValueField(wireName: 'from_date')
   DateTime get fromDate;
   /* Date and time at which disruption ends, in ISO 8601 UTC format (returns null if unknown) */
 
+  @nullable
   @BuiltValueField(wireName: 'to_date')
   DateTime get toDate;
   /* Route relevant to a disruption (if applicable) */

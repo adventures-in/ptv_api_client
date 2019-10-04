@@ -12,26 +12,32 @@ abstract class V3VehicleDescriptor
     implements Built<V3VehicleDescriptor, V3VehicleDescriptorBuilder> {
   /* Operator name of the vehicle such as \"Metro Trains Melbourne\", \"Yarra Trams\", \"Ventura Bus Line\", \"CDC\" or \"Sita Bus Lines\" . May be null/empty.              Only available for train, tram, v/line and some bus runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'operator')
   String get operator_;
   /* Operator identifier of the vehicle such as \"26094\". May be null/empty. Only available for some tram and bus runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
   /* Indicator if vehicle has a low floor. May be null. Only available for some tram runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'low_floor')
   bool get lowFloor;
   /* Indicator if vehicle is air conditioned. May be null. Only available for some tram runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'air_conditioned')
   bool get airConditioned;
   /* Vehicle description such as \"6 Car Comeng\", \"6 Car Xtrapolis\", \"3 Car Comeng\", \"6 Car Siemens\", \"3 Car Siemens\". May be null/empty.              Only available for some metropolitan train runs. */
 
+  @nullable
   @BuiltValueField(wireName: 'description')
   String get description;
   /* Supplier of vehicle descriptor data. */
 
+  @nullable
   @BuiltValueField(wireName: 'supplier')
   String get supplier;
 

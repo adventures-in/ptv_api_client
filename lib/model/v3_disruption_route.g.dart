@@ -34,11 +34,13 @@ class _$V3DisruptionRouteSerializer
       'route_gtfs_id',
       serializers.serialize(object.routeGtfsId,
           specifiedType: const FullType(String)),
-      'direction',
-      serializers.serialize(object.direction,
-          specifiedType: const FullType(V3DisruptionDirection)),
     ];
-
+    if (object.direction != null) {
+      result
+        ..add('direction')
+        ..add(serializers.serialize(object.direction,
+            specifiedType: const FullType(V3DisruptionDirection)));
+    }
     return result;
   }
 
@@ -126,9 +128,6 @@ class _$V3DisruptionRoute extends V3DisruptionRoute {
     }
     if (routeGtfsId == null) {
       throw new BuiltValueNullFieldError('V3DisruptionRoute', 'routeGtfsId');
-    }
-    if (direction == null) {
-      throw new BuiltValueNullFieldError('V3DisruptionRoute', 'direction');
     }
   }
 
@@ -246,12 +245,12 @@ class V3DisruptionRouteBuilder
               routeName: routeName,
               routeNumber: routeNumber,
               routeGtfsId: routeGtfsId,
-              direction: direction.build());
+              direction: _direction?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'direction';
-        direction.build();
+        _direction?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'V3DisruptionRoute', _$failedField, e.toString());
